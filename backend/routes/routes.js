@@ -1,9 +1,8 @@
 const express = require("express");
 
 const router = express.Router();
+const bookRoutes = require("../modules/book/book.routes");
 
-router.get("/", (req, res, next) => {
-  res.json({ msg: "The request is again working" });
-});
+router.use("/", bookRoutes);
 
 module.exports = router;
