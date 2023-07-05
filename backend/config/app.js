@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 
-app.get("/", (req, res, next) => {
-  res.json({ msg: "The request is working" });
-});
+const router = require("../routes/routes");
+
+app.use("", router);
 
 module.exports = app;
