@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const router = require("../routes/routes");
 
+app.use(express.json());
 app.use("/api/v1", router);
 
 //this is express global error handling middleware. The first parameter is always err.

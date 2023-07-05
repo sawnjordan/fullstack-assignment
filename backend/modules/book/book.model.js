@@ -12,7 +12,7 @@ const bookSchema = mongoose.Schema({
     default: 0.0,
   },
   author: {
-    type: String,
+    type: [String],
     required: true,
     trim: true,
   },
@@ -31,5 +31,5 @@ const bookSchema = mongoose.Schema({
   },
 });
 
-module.exports = bookSchema;
+module.exports = mongoose.model("Books", bookSchema);
 // title, author, ISBN, price, and availability status.
