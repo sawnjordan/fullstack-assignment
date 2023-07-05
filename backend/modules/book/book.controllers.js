@@ -1,3 +1,5 @@
+const MongoDBService = require("../../services/mongodb.service");
+const mongodbServiceOjj = new MongoDBService();
 class BookController {
   getAllBooks = (req, res, next) => {
     res.json({
