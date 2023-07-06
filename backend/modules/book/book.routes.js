@@ -10,16 +10,16 @@ router.get("/books", bookControllerObj.getAllBooks);
 //@Route /api/v1/book/new
 router.post("/books/new", bookControllerObj.createNewBook);
 
-//@desc Get single book details
-//@Route /api/v1/book/:id
-router.get("/books/:id", bookControllerObj.getSingleBook);
-
-//@desc Update single book
-//@Route /api/v1/book/:id
-router.put("/books/:id", bookControllerObj.updateSingleBook);
-
-//@desc Delete single book
-//@Route /api/v1/book/:id
-router.delete("/books/:id", bookControllerObj.deleteSingleBook);
+// //@desc Get single book details
+// //@Route /api/v1/book/:id
+// //@desc Update single book
+// //@Route /api/v1/book/:id
+// //@desc Delete single book
+// //@Route /api/v1/book/:id
+router
+  .route("/books/:id")
+  .get(bookControllerObj.getSingleBook)
+  .put(bookControllerObj.updateSingleBook)
+  .delete(bookControllerObj.updateSingleBook);
 
 module.exports = router;
