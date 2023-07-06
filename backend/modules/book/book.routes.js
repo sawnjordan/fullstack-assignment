@@ -10,4 +10,8 @@ router.get("/books", bookControllerObj.getAllBooks);
 //@Route /api/v1/book/new
 router.post("/books/new", bookControllerObj.createNewBook);
 
+//@desc Get single book details
+//@Route /api/v1/book/:id
+router.get("/books/:id", bookControllerObj.getSingleBook);
+
 module.exports = router;

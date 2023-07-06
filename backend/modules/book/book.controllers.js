@@ -8,7 +8,7 @@ class BookController {
     res.json({
       status: "success",
       count: books.length,
-      books,
+      response: books,
     });
   };
 
@@ -24,7 +24,19 @@ class BookController {
         stock,
       }).save();
 
-      res.status(201).json({ status: 201, book: newBook });
+      res.status(201).json({ status: 201, response: newBook });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
+
+  getSingleBook = async (req, res, next) => {
+    try {
+      const bookID = req.params.id;
+      const bookData = await bookSchema.findOne({ _id: bookID });
+
+      res.status(200).json({ status: "success", response: bookData });
     } catch (error) {
       console.log(error);
       next(error);
