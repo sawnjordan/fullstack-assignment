@@ -34,9 +34,17 @@ class BookController {
   getSingleBook = async (req, res, next) => {
     try {
       const bookID = req.params.id;
-      const bookData = await bookSchema.findOne({ _id: bookID });
+      const book = await bookSchema.findOne({ _id: bookID });
+      // console.log(book);
 
-      res.status(200).json({ status: "success", response: bookData });
+      if (!book) {
+        return res.status(404).json({
+          status: "Not Found",
+          response: "Book Not Found.",
+        });
+      }
+
+      res.status(200).json({ status: "success", response: book });
     } catch (error) {
       console.log(error);
       next(error);
@@ -46,11 +54,22 @@ class BookController {
   updateSingleBook = async (req, res, next) => {
     try {
       const bookID = req.params.id;
+      const book = await bookSchema.findOne({ _id: bookID });
       const bookData = req.body;
-      const book = await bookSchema.findByIdAndUpdate(bookID, bookData, {
+      // console.log(book);
+
+      if (!book) {
+        return res.status(404).json({
+          status: "Not Found",
+          response: "Book Not Found.",
+        });
+      }
+      const updatedBook = await bookSchema.findByIdAndUpdate(bookID, bookData, {
         new: true,
         runValidators: true,
       });
+
+      console.log(updatedBook);
 
       res.json({
         status: 200,
