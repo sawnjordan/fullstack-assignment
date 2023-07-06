@@ -11,24 +11,12 @@ const errorHandler = (err, req, res, next) => {
     });
   }
 
-  if (err.type === "registration") {
-    // console.log("first");
-    // res.render("register.ejs", {
-    //   errors: err.msg,
-    //   name: err.data?.name,
-    //   email: err.data?.email,
-    //   password: err.data?.password,
-    //   confirm: err.data?.confirm,
-    // });
-    return res.status(statusCode).json({ data: null, msg: msg, meta: null });
-  }
-  if (err.type == "login") {
-    // console.log("first");
-    // res.render("login.ejs", {
-    //   errors: err.msg,
-    // });
-    return res.status(statusCode).json({ data: null, msg: msg, meta: null });
-  }
+  // if (err.type === "registration") {
+  //   return res.status(statusCode).json({ data: null, msg: msg, meta: null });
+  // }
+  // if (err.type == "login") {
+  //   return res.status(statusCode).json({ data: null, msg: msg, meta: null });
+  // }
   res.status(statusCode).json({ data: null, msg: msg, meta: null });
 };
 module.exports = errorHandler;
