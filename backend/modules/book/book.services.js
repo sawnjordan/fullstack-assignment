@@ -28,7 +28,7 @@ class BookServices {
       return validateSchema.parse(bookData);
     } catch (error) {
       console.log(error);
-      console.log("first");
+      // console.log("first");
       // console.log(JSON.stringify(error));
       const errors = error.errors;
       let errorBags = {};
