@@ -17,7 +17,7 @@ class BookController {
       const bookData = req.body;
 
       const validData = bookServiceObj.validateBannerData(bookData);
-      console.log(validData);
+      // console.log(validData);
       const { title, price, author, isbn, stock } = req.body;
       const newBook = await new bookSchema({
         title,
