@@ -1,6 +1,4 @@
-const MongoDBService = require("../../services/mongodb.service");
 const bookSchema = require("./book.model");
-const mongodbServiceObj = new MongoDBService();
 class BookController {
   getAllBooks = async (req, res, next) => {
     const books = await bookSchema.find();

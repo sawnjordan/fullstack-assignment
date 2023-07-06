@@ -1,15 +1,5 @@
-const express = require("express");
-const app = express();
-require("dotenv").config();
-
-const router = require("../routes/routes");
-
-app.use(express.json());
-app.use("/api/v1", router);
-
-//this is express global error handling middleware. The first parameter is always err.
-app.use((err, req, res, next) => {
-  console.log(err);
+const errorHandler = (err, req, res, next) => {
+  // console.log(err);
   console.log("here");
   let statusCode = err.status || 500;
   let msg = err.msg || "Internal Server Error.";
@@ -21,6 +11,5 @@ app.use((err, req, res, next) => {
     });
   }
   res.status(statusCode).json({ data: null, msg: msg, meta: null });
-});
-
-module.exports = app;
+};
+module.exports = errorHandler;
