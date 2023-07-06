@@ -1,4 +1,4 @@
-const bookSchema = require("./book.model");
+const BookModel = require("./book.model");
 const { z } = require("zod");
 const { bookServiceObj } = require("./book.services");
 const Helpers = require("../../helpers/helpers");
@@ -6,7 +6,7 @@ class BookController {
   getAllBooks = async (req, res, next) => {
     const queryStr = req.query;
     // console.log(queryStr);
-    const helper = new Helpers(bookSchema.find(), queryStr).searchBooks();
+    const helper = new Helpers(BookModel.find(), queryStr).searchBooks();
     const books = await helper.query;
     res.json({
       status: "success",
@@ -22,7 +22,7 @@ class BookController {
       const validData = bookServiceObj.validateBannerData(bookData);
       // console.log(validData);
       const { title, price, author, isbn, stock } = req.body;
-      const newBook = await new bookSchema({
+      const newBook = await new BookModel({
         title,
         price,
         author,
@@ -39,7 +39,7 @@ class BookController {
   getSingleBook = async (req, res, next) => {
     try {
       const bookID = req.params.id;
-      const book = await bookSchema.findOne({ _id: bookID });
+      const book = await BookModel.findOne({ _id: bookID });
       // console.log(book);
 
       if (!book) {
@@ -59,7 +59,7 @@ class BookController {
   updateSingleBook = async (req, res, next) => {
     try {
       const bookID = req.params.id;
-      const book = await bookSchema.findOne({ _id: bookID });
+      const book = await BookModel.findOne({ _id: bookID });
       const bookData = req.body;
       // console.log(book);
 
@@ -69,7 +69,7 @@ class BookController {
           response: "Book Not Found.",
         });
       }
-      const updatedBook = await bookSchema.findByIdAndUpdate(bookID, bookData, {
+      const updatedBook = await BookModel.findByIdAndUpdate(bookID, bookData, {
         new: true,
         runValidators: true,
       });
@@ -82,7 +82,7 @@ class BookController {
         response: book,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       next(error);
     }
   };
@@ -90,7 +90,7 @@ class BookController {
   deleteSingleBook = async (req, res, next) => {
     try {
       const bookID = req.params.id;
-      let response = await bookSchema.findOneAndDelete({ _id: bookID });
+      let response = await BookModel.findOneAndDelete({ _id: bookID });
       // console.log(response);
       res.json({
         status: 200,
@@ -98,7 +98,7 @@ class BookController {
         response,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       next(error);
     }
   };
