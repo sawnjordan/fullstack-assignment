@@ -42,6 +42,26 @@ class BookController {
       next(error);
     }
   };
+
+  updateSingleBook = async (req, res, next) => {
+    try {
+      const bookID = req.params.id;
+      const bookData = req.body;
+      const book = await bookSchema.findByIdAndUpdate(bookID, bookData, {
+        new: true,
+        runValidators: true,
+      });
+
+      res.json({
+        status: 200,
+        msg: `Book Updated with Id: ${bookID}`,
+        response: book,
+      });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
 }
 
 const bookControllerObj = new BookController();

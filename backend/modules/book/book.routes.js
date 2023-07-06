@@ -14,4 +14,8 @@ router.post("/books/new", bookControllerObj.createNewBook);
 //@Route /api/v1/book/:id
 router.get("/books/:id", bookControllerObj.getSingleBook);
 
+//@desc Get single book details
+//@Route /api/v1/book/:id
+router.put("/books/:id", bookControllerObj.updateSingleBook);
+
 module.exports = router;
