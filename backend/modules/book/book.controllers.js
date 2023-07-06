@@ -1,10 +1,13 @@
 const bookSchema = require("./book.model");
 const { z } = require("zod");
 const { bookServiceObj } = require("./book.services");
+const Helpers = require("../../helpers/helpers");
 class BookController {
   getAllBooks = async (req, res, next) => {
-    const books = await bookSchema.find();
-    // console.log(books);
+    const queryStr = req.query;
+    // console.log(queryStr);
+    const helper = new Helpers(bookSchema.find(), queryStr).searchBooks();
+    const books = await helper.query;
     res.json({
       status: "success",
       count: books.length,
