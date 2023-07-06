@@ -1,6 +1,6 @@
 const errorHandler = (err, req, res, next) => {
-  // console.log(err);
-  console.log("here");
+  console.log(err);
+  //   console.log("here");
   let statusCode = err.status || 500;
   let msg = err.msg || "Internal Server Error.";
   if (err.name === "CastError") {

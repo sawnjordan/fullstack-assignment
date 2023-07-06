@@ -1,4 +1,6 @@
 const bookSchema = require("./book.model");
+const { z } = require("zod");
+const { bookServiceObj } = require("./book.services");
 class BookController {
   getAllBooks = async (req, res, next) => {
     const books = await bookSchema.find();
@@ -13,6 +15,9 @@ class BookController {
   createNewBook = async (req, res, next) => {
     try {
       const bookData = req.body;
+
+      const validData = bookServiceObj.validateBannerData(bookData);
+      console.log(validData);
       const { title, price, author, isbn, stock } = req.body;
       const newBook = await new bookSchema({
         title,
@@ -23,9 +28,8 @@ class BookController {
       }).save();
 
       res.status(201).json({ status: 201, response: newBook });
-    } catch (error) {
-      console.log(error);
-      next(error);
+    } catch (err) {
+      next(err);
     }
   };
 
