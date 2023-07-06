@@ -2,10 +2,13 @@ const MongoDBService = require("../../services/mongodb.service");
 const bookSchema = require("./book.model");
 const mongodbServiceObj = new MongoDBService();
 class BookController {
-  getAllBooks = (req, res, next) => {
+  getAllBooks = async (req, res, next) => {
+    const books = await bookSchema.find();
+    // console.log(books);
     res.json({
       status: "success",
-      msg: "This is GET route to show all books from Database.",
+      count: books.length,
+      books,
     });
   };
 
