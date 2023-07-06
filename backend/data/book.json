@@ -1,7 +1,37 @@
-{
-  "title": "Don't Think of an Elephant",
-  "price": 500,
-  "author": ["Lakoff, George", "Hassly Hault"],
-  "isbn": 2413541324124,
-  "stock": 10
-}
+[
+  {
+    "title": "Don't Think of an Elephant",
+    "price": 500,
+    "author": ["Lakoff, George", "Hassly Hault"],
+    "isbn": 241324124,
+    "stock": 10
+  },
+  {
+    "title": "Book Name Two",
+    "price": 600,
+    "author": ["Ram Kumar"],
+    "isbn": 241324124,
+    "stock": 9
+  },
+  {
+    "title": "Book Name Three",
+    "price": 700,
+    "author": ["Birendra Lama", "Sanjog Lama"],
+    "isbn": 241324124,
+    "stock": 2
+  },
+  {
+    "title": "Book Name Four",
+    "price": 400,
+    "author": ["Kiran Gautam", "Anil Kumar Rai", "Sanjog Lama"],
+    "isbn": 241324124,
+    "stock": 1
+  },
+  {
+    "title": "Book Name Five",
+    "price": 800,
+    "author": ["Aakriti Pandye", "Rama Silwal"],
+    "isbn": 241324124,
+    "stock": 0
+  }
+]
