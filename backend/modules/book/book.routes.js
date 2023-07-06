@@ -14,8 +14,12 @@ router.post("/books/new", bookControllerObj.createNewBook);
 //@Route /api/v1/book/:id
 router.get("/books/:id", bookControllerObj.getSingleBook);
 
-//@desc Get single book details
+//@desc Update single book
 //@Route /api/v1/book/:id
 router.put("/books/:id", bookControllerObj.updateSingleBook);
+
+//@desc Delete single book
+//@Route /api/v1/book/:id
+router.delete("/books/:id", bookControllerObj.deleteSingleBook);
 
 module.exports = router;

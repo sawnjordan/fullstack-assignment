@@ -62,6 +62,22 @@ class BookController {
       next(error);
     }
   };
+
+  deleteSingleBook = async (req, res, next) => {
+    try {
+      const bookID = req.params.id;
+      let response = await bookSchema.findOneAndDelete({ _id: bookID });
+      // console.log(response);
+      res.json({
+        status: 200,
+        msg: `Book: ${response.title} deleted.`,
+        response,
+      });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
 }
 
 const bookControllerObj = new BookController();
