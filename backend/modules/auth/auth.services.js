@@ -53,12 +53,14 @@ class AuthServices {
   };
 
   generateJWTAndSetCookie = (statusCode, user, res) => {
-    const jwtToken = jwt.sign({ id: user._id }, "secret-key-ecommmerce", {
-      expiresIn: "7d",
+    const jwtToken = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: process.env.JWT_EXPIRES_IN,
     });
 
     const options = {
-      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      expires: new Date(
+        Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+      ),
       httpOnly: true,
     };
     res.status(statusCode).cookie("token", jwtToken, options).json({
