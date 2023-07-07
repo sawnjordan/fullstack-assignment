@@ -65,6 +65,16 @@ class AuthController {
 
     // res.json({ status: "success", response: jwtToken });
   };
+
+  logoutUser = (req, res, next) => {
+    res.cookie("token", null, {
+      expires: new Date(Date.now()),
+      httpOnly: true,
+    });
+    res
+      .status(200)
+      .json({ status: "success", response: "Logged out successfully." });
+  };
 }
 
 const authControllerObj = new AuthController();
