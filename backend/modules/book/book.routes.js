@@ -1,6 +1,7 @@
 const express = require("express");
 const { bookControllerObj } = require("../book/book.controllers");
-const isUserAuthenticated = require("../../middleware/auth.middleware");
+const { isUserAuthenticated } = require("../../middleware/auth.middleware");
+const { authServicesObj } = require("../auth/auth.services");
 const router = express.Router();
 
 //@desc Get All Books
@@ -9,18 +10,31 @@ router.get("/", bookControllerObj.getAllBooks);
 
 //@desc Add/Create New Book
 //@Route /api/v1/book/new
-router.post("/new", isUserAuthenticated, bookControllerObj.createNewBook);
+router.post(
+  "/new",
+  isUserAuthenticated,
+  authServicesObj.authorizeRole("admin"),
+  bookControllerObj.createNewBook
+);
 
-// //@desc Get single book details
-// //@Route /api/v1/book/:id
-// //@desc Update single book
-// //@Route /api/v1/book/:id
-// //@desc Delete single book
-// //@Route /api/v1/book/:id
+//@desc Get single book details
+//@Route /api/v1/book/:id
+//@desc Update single book
+//@Route /api/v1/book/:id
+//@desc Delete single book
+//@Route /api/v1/book/:id
 router
   .route("/:id")
   .get(bookControllerObj.getSingleBook)
-  .put(isUserAuthenticated, bookControllerObj.updateSingleBook)
-  .delete(isUserAuthenticated, bookControllerObj.updateSingleBook);
+  .put(
+    isUserAuthenticated,
+    authServicesObj.authorizeRole("admin"),
+    bookControllerObj.updateSingleBook
+  )
+  .delete(
+    isUserAuthenticated,
+    authServicesObj.authorizeRole("admin"),
+    bookControllerObj.updateSingleBook
+  );
 
 module.exports = router;

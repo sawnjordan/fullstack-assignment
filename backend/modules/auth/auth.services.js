@@ -69,7 +69,34 @@ class AuthServices {
       user,
     });
   };
+
+  authorizeRole = (role) => {
+    return (req, res, next) => {
+      const user = req.user;
+      if (!user.role.includes(role)) {
+        return res.status(403).json({
+          status: "failed",
+          response: `Role ${req.user.role} is not allowed to access the resource.`,
+        });
+      } else {
+        next();
+      }
+    };
+  };
 }
+
+const authorizeRole = (role) => {
+  return (req, res, next) => {
+    const user = req.user; // Assuming the user data is available in the 'user' property of the 'req' object
+    if (user.roles.includes(role)) {
+      // User has the specified role, proceed to the next middleware or route handler
+      next();
+    } else {
+      // User does not have the specified role, send a response with an error message
+      res.status(403).json({ error: "Unauthorized" });
+    }
+  };
+};
 
 const authServicesObj = new AuthServices();
 module.exports = { AuthServices, authServicesObj };
