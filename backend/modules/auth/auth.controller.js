@@ -1,4 +1,5 @@
 const { authServicesObj } = require("./auth.services");
+const UserModel = require("./user.model");
 const UserSchema = require("./user.model");
 const bcrypt = require("bcryptjs");
 
@@ -36,34 +37,39 @@ class AuthController {
   };
 
   loginUser = async (req, res, next) => {
-    const { email, password } = req.body;
+    try {
+      const { email, password } = req.body;
 
-    if (!email || !password) {
-      res
-        .status(400)
-        .json({ status: "failed", response: "Email and Password required." });
+      if (!email || !password) {
+        res
+          .status(400)
+          .json({ status: "failed", response: "Email and Password required." });
+      }
+
+      const user = await authServicesObj.ifUserExists(email);
+      // console.log(user);
+
+      if (!user) {
+        return res
+          .status(400)
+          .json({ status: "failed", response: "Email doesn't exists." });
+      }
+
+      const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+      if (!isPasswordMatch) {
+        return res
+          .status(400)
+          .json({ status: "failed", response: "Password is incorrect." });
+      }
+
+      authServicesObj.generateJWTAndSetCookie(200, user, res);
+
+      // res.json({ status: "success", response: jwtToken });
+    } catch (error) {
+      console.log(error);
+      next(error);
     }
-
-    const user = await authServicesObj.ifUserExists(email);
-    // console.log(user);
-
-    if (!user) {
-      return res
-        .status(400)
-        .json({ status: "failed", response: "Email doesn't exists." });
-    }
-
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
-
-    if (!isPasswordMatch) {
-      return res
-        .status(400)
-        .json({ status: "failed", response: "Password is incorrect." });
-    }
-
-    authServicesObj.generateJWTAndSetCookie(200, user, res);
-
-    // res.json({ status: "success", response: jwtToken });
   };
 
   logoutUser = (req, res, next) => {
@@ -74,6 +80,17 @@ class AuthController {
     res
       .status(200)
       .json({ status: "success", response: "Logged out successfully." });
+  };
+
+  getUserProfile = async (req, res, next) => {
+    try {
+      console.log(req.user);
+      const user = await UserModel.findById(req.user.id);
+      res.status(200).json({ status: "success", response: user });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
   };
 }
 
