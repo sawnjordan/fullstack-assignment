@@ -20,7 +20,7 @@ router.post("/new", isUserAuthenticated, bookControllerObj.createNewBook);
 router
   .route("/:id")
   .get(bookControllerObj.getSingleBook)
-  .put(bookControllerObj.updateSingleBook)
-  .delete(bookControllerObj.updateSingleBook);
+  .put(isUserAuthenticated, bookControllerObj.updateSingleBook)
+  .delete(isUserAuthenticated, bookControllerObj.updateSingleBook);
 
 module.exports = router;
