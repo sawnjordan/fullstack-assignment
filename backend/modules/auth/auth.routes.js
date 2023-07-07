@@ -8,6 +8,12 @@ const { authServiceObj } = require("./auth.services");
 //@route POST /auth/register
 router.post("/register", authControllerOjb.registerUser);
 
+router.get(
+  "/users",
+  authServiceObj.isAuthenticated,
+  authControllerOjb.getAllUsers
+);
+
 //@desc Login user
 //@route POST /auth/login
 router.post(

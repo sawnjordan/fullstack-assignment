@@ -55,6 +55,7 @@ class AuthServices {
 
   isAuthenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
+      console.log(req);
       return next();
     } else {
       res.status(400).json({ response: "Please login to move forward." });
@@ -68,6 +69,8 @@ class AuthServices {
       return next();
     }
   };
+
+  authorizeRoles = (roles) => {};
 }
 const authServiceObj = new AuthServices();
 module.exports = { AuthServices, authServiceObj };

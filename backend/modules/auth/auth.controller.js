@@ -2,6 +2,7 @@ const { authServiceObj } = require("./auth.services");
 const bcrypt = require("bcryptjs");
 const Users = require("./user.model");
 const passport = require("passport");
+const userModel = require("./user.model");
 class AuthController {
   registerUser = async (req, res, next) => {
     try {
@@ -36,6 +37,12 @@ class AuthController {
       failureRedirect: "/auth/login",
       failureFlash: true,
     });
+  };
+
+  getAllUsers = async (req, res, next) => {
+    const users = await userModel.find();
+    console.log(users);
+    res.json({ response: users });
   };
 }
 

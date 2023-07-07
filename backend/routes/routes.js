@@ -5,6 +5,6 @@ const bookRoutes = require("../modules/book/book.routes");
 const authRoutes = require("../modules/auth/auth.routes");
 
 router.use("/auth", authRoutes);
-router.use("/", bookRoutes);
+router.use("/admin/books", bookRoutes);
 
 module.exports = router;

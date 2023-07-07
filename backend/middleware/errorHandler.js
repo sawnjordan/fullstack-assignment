@@ -10,13 +10,6 @@ const errorHandler = (err, req, res, next) => {
       msg: `Invalid value ${err.value} for field: ${err.path}`,
     });
   }
-
-  // if (err.type === "registration") {
-  //   return res.status(statusCode).json({ data: null, msg: msg, meta: null });
-  // }
-  // if (err.type == "login") {
-  //   return res.status(statusCode).json({ data: null, msg: msg, meta: null });
-  // }
   res.status(statusCode).json({ data: null, msg: msg, meta: null });
 };
 module.exports = errorHandler;
