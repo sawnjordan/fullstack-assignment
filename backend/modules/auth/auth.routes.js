@@ -13,4 +13,11 @@ router.get("/logout", authControllerObj.logoutUser);
 
 router.get("/me", isUserAuthenticated, authControllerObj.getUserProfile);
 
+router.get(
+  "/users",
+  isUserAuthenticated,
+  authServicesObj.authorizeRole("admin"),
+  authControllerObj.getAllUser
+);
+
 module.exports = router;

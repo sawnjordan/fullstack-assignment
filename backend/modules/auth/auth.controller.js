@@ -92,6 +92,21 @@ class AuthController {
       next(error);
     }
   };
+  getAllUser = async (req, res, next) => {
+    try {
+      const users = await UserModel.find();
+      if (!users) {
+        return res
+          .status(404)
+          .json({ status: "Not Found", response: "No any users found." });
+      } else {
+        res.status(200).json({ status: "success", response: users });
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
 }
 
 const authControllerObj = new AuthController();
