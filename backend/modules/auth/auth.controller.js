@@ -107,6 +107,25 @@ class AuthController {
       next(error);
     }
   };
+
+  getUserDetails = async (req, res, next) => {
+    try {
+      const userId = req.params.id;
+      const user = await UserModel.findById(userId);
+      if (!user) {
+        return res.status(404).json({
+          status: "Not Found",
+          response: `User not found with ID: ${userId}`,
+        });
+      } else {
+        console.log(user);
+        res.status(200).json({ status: "success", response: user });
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
 }
 
 const authControllerObj = new AuthController();

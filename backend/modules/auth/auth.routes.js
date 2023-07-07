@@ -20,4 +20,11 @@ router.get(
   authControllerObj.getAllUser
 );
 
+router.get(
+  "/users/:id",
+  isUserAuthenticated,
+  authServicesObj.authorizeRole("admin"),
+  authControllerObj.getUserDetails
+);
+
 module.exports = router;
