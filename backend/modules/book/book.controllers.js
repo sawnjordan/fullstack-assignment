@@ -21,13 +21,15 @@ class BookController {
 
       const validData = bookServiceObj.validateBannerData(bookData);
       // console.log(validData);
-      const { title, price, author, isbn, stock } = req.body;
+      req.body.user = req.user.id;
+      const { title, price, author, isbn, stock, user } = req.body;
       const newBook = await new BookModel({
         title,
         price,
         author,
         isbn,
         stock,
+        user,
       }).save();
 
       res.status(201).json({ status: 201, response: newBook });
