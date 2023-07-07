@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+//body parser
+app.use(express.urlencoded({ extended: false }));
 
 const router = require("../routes/routes");
 const errorHandler = require("../middleware/errorHandler");
