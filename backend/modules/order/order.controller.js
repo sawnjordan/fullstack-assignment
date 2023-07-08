@@ -20,6 +20,27 @@ class OrderController {
       next(error);
     }
   };
+
+  getSingleOrder = async (req, res, next) => {
+    try {
+      const orderId = req.params.id;
+      const order = await OrderModel.findById(orderId).populate(
+        "user",
+        "name email"
+      );
+      if (!order) {
+        return res.status(404).json({
+          status: "Not Found",
+          response: `No order found with ID: ${orderId}`,
+        });
+      } else {
+        res.status(200).json({ status: "success", response: order });
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
 }
 
 const orderControllerObj = new OrderController();

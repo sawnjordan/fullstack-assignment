@@ -4,15 +4,20 @@ const { bookServiceObj } = require("./book.services");
 const Helpers = require("../../helpers/helpers");
 class BookController {
   getAllBooks = async (req, res, next) => {
-    const queryStr = req.query;
-    // console.log(queryStr);
-    const helper = new Helpers(BookModel.find(), queryStr).searchBooks();
-    const books = await helper.query;
-    res.json({
-      status: "success",
-      count: books.length,
-      response: books,
-    });
+    try {
+      const queryStr = req.query;
+      // console.log(queryStr);
+      const helper = new Helpers(BookModel.find(), queryStr).searchBooks();
+      const books = await helper.query;
+      res.json({
+        status: "success",
+        count: books.length,
+        response: books,
+      });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
   };
 
   createNewBook = async (req, res, next) => {
