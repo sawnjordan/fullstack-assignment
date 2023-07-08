@@ -44,18 +44,20 @@ const orderSchema = new mongoose.Schema(
     deliveredAt: {
       type: Date,
     },
-    shippingAddress: {
-      address: {
-        type: String,
-        required: true,
+    shippingAddress: [
+      {
+        address: {
+          type: String,
+          required: true,
+        },
+        phoneNumber: {
+          type: String,
+          required: true,
+        },
       },
-      phoneNumber: {
-        type: String,
-        required: true,
-      },
-    },
+    ],
     orderStatus: {
-      type: Number,
+      type: String,
       required: true,
       default: "Proecessing",
     },
