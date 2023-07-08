@@ -59,6 +59,20 @@ class OrderController {
       next(error);
     }
   };
+
+  getAllOrder = async (req, res, next) => {
+    try {
+      const orders = await OrderModel.find();
+      let totalAmout = 0;
+      orders.map((item) => {
+        totalAmout += item.totalPrice;
+      });
+      res.status(200).json({ status: "success", response: orders, totalAmout });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
 }
 
 const orderControllerObj = new OrderController();
