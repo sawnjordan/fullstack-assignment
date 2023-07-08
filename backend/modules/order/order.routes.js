@@ -5,16 +5,32 @@ const { authServicesObj } = require("../auth/auth.services");
 
 const router = express.Router();
 
-router.post("/new", isUserAuthenticated, orderControllerObj.createNewOrder);
+router.post(
+  "/order/new",
+  isUserAuthenticated,
+  orderControllerObj.createNewOrder
+);
 
-router.get("/me", isUserAuthenticated, orderControllerObj.getMyOrder);
+router.get("/order/me", isUserAuthenticated, orderControllerObj.getMyOrder);
 
 router.get(
-  "/all",
+  "/admin/order/all",
   isUserAuthenticated,
   authServicesObj.authorizeRole("admin"),
   orderControllerObj.getAllOrder
 );
 
-router.get("/:id", isUserAuthenticated, orderControllerObj.getSingleOrder);
+router.get(
+  "/order/:id",
+  isUserAuthenticated,
+  orderControllerObj.getSingleOrder
+);
+
+router.post(
+  "/admin/order/:id",
+  isUserAuthenticated,
+  authServicesObj.authorizeRole("admin"),
+  orderControllerObj.updateOrder
+);
+
 module.exports = router;

@@ -7,6 +7,6 @@ const orderRoutes = require("../modules/order/order.routes");
 
 router.use("/auth", authRoutes);
 router.use("/books", bookRoutes);
-router.use("/order", orderRoutes);
+router.use("/", orderRoutes);
 
 module.exports = router;
