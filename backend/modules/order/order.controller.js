@@ -24,10 +24,10 @@ class OrderController {
   getSingleOrder = async (req, res, next) => {
     try {
       const orderId = req.params.id;
-      const order = await OrderModel.findById(orderId).populate(
-        "user",
-        "name email"
-      );
+      const order = await OrderModel.find({
+        _id: orderId,
+        user: req.user.id,
+      }).populate("user", "name email");
       if (!order) {
         return res.status(404).json({
           status: "Not Found",
@@ -41,6 +41,7 @@ class OrderController {
       next(error);
     }
   };
+
   getMyOrder = async (req, res, next) => {
     try {
       const userId = req.user._id;
