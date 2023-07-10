@@ -145,7 +145,9 @@ class AuthController {
         const resetURL = `${req.protocol}://${res.get(
           "host"
         )}/api/v1/auth/password-reset/${resetToken}`;
-        const message = `<p><stong>Dear ${user.name} 🙂,</stong></p>Your Password Reset token is as follow:\n\n ${resetURL}\n\nIf you have not requested this then you can ignore this.`;
+        const message = `<p><stong>Dear ${user.name} 🙂,</stong></p>Your Password Reset token is as follow:\n\n ${resetURL}\n\nIf you have not requested this then you can ignore this.
+        
+        Regards!`;
         let sendMailSuccess = await authServicesObj.sendActivationEmail(
           user.email,
           user.name,
