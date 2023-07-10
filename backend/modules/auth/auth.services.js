@@ -85,18 +85,5 @@ class AuthServices {
   };
 }
 
-const authorizeRole = (role) => {
-  return (req, res, next) => {
-    const user = req.user; // Assuming the user data is available in the 'user' property of the 'req' object
-    if (user.roles.includes(role)) {
-      // User has the specified role, proceed to the next middleware or route handler
-      next();
-    } else {
-      // User does not have the specified role, send a response with an error message
-      res.status(403).json({ error: "Unauthorized" });
-    }
-  };
-};
-
 const authServicesObj = new AuthServices();
 module.exports = { AuthServices, authServicesObj };
