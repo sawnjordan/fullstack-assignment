@@ -3,6 +3,7 @@ const { authServicesObj } = require("./auth.services");
 const UserModel = require("./user.model");
 const UserSchema = require("./user.model");
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto");
 
 class AuthController {
   registerUser = async (req, res, next) => {
@@ -144,7 +145,7 @@ class AuthController {
         // console.log(resetToken);
         const resetURL = `${req.protocol}://${req.get(
           "host"
-        )}/api/v1/auth/password-reset/${resetToken}`;
+        )}/api/v1/auth/reset-password/${resetToken}`;
         // console.log(req.get("host"));
         const message = `<p><stong>Dear ${user.name} 🙂,</stong></p><p>Your Password Reset token is as follow:</p><br/> 
         <a href="${resetURL}">${resetURL}</a>
@@ -162,6 +163,57 @@ class AuthController {
           status: "success",
           response: `Email Sent:${sendMailSuccess.messageId}`,
         });
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
+
+  resetPassword = async (req, res, next) => {
+    try {
+      //hash the url token
+      const token = req.params.token;
+      const { password, confirmPassword } = req.body;
+      const resetPasswordToken = crypto
+        .createHash("sha256")
+        .update(token)
+        .digest("hex");
+      const user = await UserModel.findOne({
+        $and: [
+          { resetPasswordToken },
+          { resetPasswordExpire: { $gt: Date.now() } },
+        ],
+      });
+
+      if (!user) {
+        return next({
+          status: 400,
+          msg: "Password reset token is invalid or expired.",
+        });
+      }
+
+      if (!password || password !== confirmPassword || password.length < 8) {
+        throw {
+          status: 400,
+          msg: "Password must be of atlease 8 characters and should match Re-password",
+        };
+      }
+      const hashedPassword = bcrypt.hashSync(password, 10);
+      console.log(user);
+      user.password = hashedPassword;
+      user.resetPasswordToken = null;
+      user.resetPasswordExpire = null;
+      // console.log(user);
+      let updatedUser = await authServicesObj.updateUser(user, user._id);
+      // console.log(updatedUser);
+      if (updatedUser) {
+        res.status(200).json({
+          status: "success",
+          response: "Password changed/updated successfully",
+        });
+      } else {
+        next({ status: 200, msg: "Unable to update the password." });
       }
     } catch (error) {
       console.log(error);

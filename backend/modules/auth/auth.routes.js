@@ -11,6 +11,8 @@ router.post("/login", authControllerObj.loginUser);
 
 router.post("/forgot-password", authControllerObj.forgotPassword);
 
+router.post("/reset-password/:token", authControllerObj.resetPassword);
+
 router.get("/logout", authControllerObj.logoutUser);
 
 router.get("/me", isUserAuthenticated, authControllerObj.getUserProfile);
