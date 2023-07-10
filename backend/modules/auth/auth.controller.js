@@ -1,3 +1,4 @@
+const helperObj = require("../../helpers/helpers");
 const { authServicesObj } = require("./auth.services");
 const UserModel = require("./user.model");
 const UserSchema = require("./user.model");
@@ -120,6 +121,41 @@ class AuthController {
       } else {
         console.log(user);
         res.status(200).json({ status: "success", response: user });
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
+
+  forgotPassword = async (req, res, next) => {
+    try {
+      const { email } = req.body;
+      const user = await UserModel.findOne({ email });
+      // console.log(user.id);
+      if (!user) {
+        res.json({
+          status: 404,
+          response: "User with the email doesn't exists.",
+        });
+      } else {
+        //get reset token
+        const { resetToken } = helperObj.generateResetPasswordToken(user._id);
+        // console.log(resetToken);
+        const resetURL = `${req.protocol}://${res.get(
+          "host"
+        )}/api/v1/auth/password-reset/${resetToken}`;
+        const message = `<p><stong>Dear ${user.name} 🙂,</stong></p>Your Password Reset token is as follow:\n\n ${resetURL}\n\nIf you have not requested this then you can ignore this.`;
+        let sendMailSuccess = await authServicesObj.sendActivationEmail(
+          user.email,
+          user.name,
+          message
+        );
+
+        res.json({
+          status: "success",
+          response: `Email Sent:${sendMailSuccess.messageId}`,
+        });
       }
     } catch (error) {
       console.log(error);

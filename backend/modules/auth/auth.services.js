@@ -1,7 +1,9 @@
 const { z } = require("zod");
 const UserModel = require("./user.model");
 const jwt = require("jsonwebtoken");
+const MailService = require("../../helpers/email.service");
 class AuthServices {
+  mailService;
   validateRegisterData = (data) => {
     try {
       const validationSchema = z.object({
@@ -82,6 +84,40 @@ class AuthServices {
         next();
       }
     };
+  };
+
+  updateUser = async (updateData, userId) => {
+    try {
+      let data = await UserModel.findByIdAndUpdate(
+        userId,
+        { $set: updateData },
+        { new: true }
+      );
+      if (data) {
+        return data;
+      } else {
+        throw { status: 400, msg: "Update failed." };
+      }
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  sendActivationEmail = async (to, name, message) => {
+    try {
+      this.mailService = new MailService();
+      this.mailService.setMessage({
+        to: to,
+        sub: "Password Recovery!!!",
+        msgBody: message,
+        // text: "<b>Hello world?</b>",
+      });
+
+      return await this.mailService.sendEmail();
+    } catch (error) {
+      console.log(error);
+    }
   };
 }
 

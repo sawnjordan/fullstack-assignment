@@ -9,6 +9,8 @@ router.post("/register", authControllerObj.registerUser);
 
 router.post("/login", authControllerObj.loginUser);
 
+router.post("/forgot-password", authControllerObj.forgotPassword);
+
 router.get("/logout", authControllerObj.logoutUser);
 
 router.get("/me", isUserAuthenticated, authControllerObj.getUserProfile);

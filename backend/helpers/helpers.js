@@ -1,3 +1,6 @@
+const crypto = require("crypto");
+const UserModel = require("../modules/auth/user.model");
+const { authServicesObj } = require("../modules/auth/auth.services");
 class Helpers {
   constructor(query, queryStr) {
     this.query = query;
@@ -16,6 +19,28 @@ class Helpers {
     // console.log(this.query);
     return this;
   };
-}
 
-module.exports = Helpers;
+  generateResetPasswordToken = (userId) => {
+    //generate token
+    const resetToken = crypto.randomBytes(20).toString("hex");
+
+    //Hash the token
+    const resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+    const resetPasswordExpire = Date.now() + 30 * 60 * 1000;
+    console.log(resetPasswordExpire);
+    authServicesObj.updateUser(
+      { resetPasswordToken, resetPasswordExpire },
+      userId
+    );
+    // console.log(response);
+
+    return { resetToken };
+  };
+
+  //set token expire time
+}
+const helperObj = new Helpers();
+module.exports = helperObj;
