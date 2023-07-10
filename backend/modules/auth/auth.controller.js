@@ -142,10 +142,14 @@ class AuthController {
         //get reset token
         const { resetToken } = helperObj.generateResetPasswordToken(user._id);
         // console.log(resetToken);
-        const resetURL = `${req.protocol}://${res.get(
+        const resetURL = `${req.protocol}://${req.get(
           "host"
         )}/api/v1/auth/password-reset/${resetToken}`;
-        const message = `<p><stong>Dear ${user.name} 🙂,</stong></p>Your Password Reset token is as follow:\n\n ${resetURL}\n\nIf you have not requested this then you can ignore this.
+        // console.log(req.get("host"));
+        const message = `<p><stong>Dear ${user.name} 🙂,</stong></p><p>Your Password Reset token is as follow:</p><br/> 
+        <a href="${resetURL}">${resetURL}</a>
+        
+        <p>If you have not requested this then you can ignore this.</p>
         
         Regards!`;
         let sendMailSuccess = await authServicesObj.sendActivationEmail(
