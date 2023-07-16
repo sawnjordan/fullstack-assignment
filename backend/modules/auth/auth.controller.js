@@ -9,7 +9,7 @@ class AuthController {
   registerUser = async (req, res, next) => {
     try {
       const data = req.body;
-      console.log(data);
+      // console.log(data);
       const validData = authServicesObj.validateRegisterData(data);
 
       const { name, email, password } = validData;
