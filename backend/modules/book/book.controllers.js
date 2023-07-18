@@ -1,7 +1,7 @@
 const BookModel = require("./book.model");
 const { z } = require("zod");
 const { bookServiceObj } = require("./book.services");
-const Helpers = require("../../helpers/helpers");
+const { Helpers } = require("../../helpers/helpers");
 class BookController {
   getAllBooks = async (req, res, next) => {
     try {

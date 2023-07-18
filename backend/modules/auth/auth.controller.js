@@ -1,4 +1,4 @@
-const helperObj = require("../../helpers/helpers");
+const { helperObj } = require("../../helpers/helpers");
 const { authServicesObj } = require("./auth.services");
 const UserModel = require("./user.model");
 const UserSchema = require("./user.model");

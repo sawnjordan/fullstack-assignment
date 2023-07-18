@@ -43,4 +43,4 @@ class Helpers {
   //set token expire time
 }
 const helperObj = new Helpers();
-module.exports = helperObj;
+module.exports = { helperObj, Helpers };
