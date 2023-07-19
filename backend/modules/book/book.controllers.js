@@ -8,7 +8,7 @@ class BookController {
       // return next({ status: 404, msg: "error" });
       const queryStr = req.query;
       // console.log(queryStr);
-      const helper = new Helpers(BookModel.fdind(), queryStr).searchBooks();
+      const helper = new Helpers(BookModel.find(), queryStr).searchBooks();
       const books = await helper.query;
       res.json({
         status: "success",
