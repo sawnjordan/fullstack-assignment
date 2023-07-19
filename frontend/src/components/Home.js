@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { MetaData } from "./layout/MetaData";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchBooks } from "../features/book/bookSlices";
+import { fetchBooks } from "../features/book/booksSlices";
 import { Book } from "./book/Book";
 import { Loader } from "./layout/Loader";
 import { toast } from "react-toastify";
 
 export const Home = () => {
   const dispatch = useDispatch();
-  const { loading, books, count, error } = useSelector((state) => state.book);
+  const { loading, books, count, error } = useSelector((state) => state.books);
   if (!loading && error) {
     toast(`${error.message}`, {
       position: "top-right",
