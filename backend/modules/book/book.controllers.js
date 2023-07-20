@@ -8,12 +8,16 @@ class BookController {
     try {
       // return next({ status: 404, msg: "error" });
       const queryStr = req.query;
+      const resPerPage = queryStr.page;
+      const count = await bookServiceObj.getTotalBookCount();
       // console.log(queryStr);
-      const helper = new Helpers(BookModel.find(), queryStr).searchBooks();
+      const helper = new Helpers(BookModel.find(), queryStr)
+        .searchBooks()
+        .pagination(resPerPage);
       const books = await helper.query;
       res.json({
         status: "success",
-        count: books.length,
+        count,
         response: books,
         resPerPage,
       });

@@ -1,4 +1,5 @@
 const { z } = require("zod");
+const BookModel = require("./book.model");
 class BookServices {
   validateBannerData = (bookData) => {
     try {
@@ -46,6 +47,15 @@ class BookServices {
       });
       // console.log(errorBags);
       throw { type: "banner", status: 400, msg: errorBags };
+    }
+  };
+
+  getTotalBookCount = async () => {
+    try {
+      return await BookModel.count();
+    } catch (error) {
+      console.log(error);
+      throw error;
     }
   };
 }

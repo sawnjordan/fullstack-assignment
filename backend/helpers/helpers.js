@@ -6,7 +6,7 @@ class Helpers {
     this.query = query;
     this.queryStr = queryStr;
   }
-  searchBooks = () => {
+  searchBooks() {
     const keyword = this.queryStr.keyword
       ? {
           title: {
@@ -18,8 +18,20 @@ class Helpers {
     this.query = this.query.find({ ...keyword });
     // console.log(this.query);
     return this;
-  };
+  }
 
+  // filter = () => {
+  //   const queryCopy = { ...this.queryStr };
+
+  //   //Removing fields from the query
+  //   const removeFields = ["keyword", "limit", "page"];
+  // };
+  pagination(resPerPage) {
+    const currentPage = parseInt(this.queryStr.page);
+    const skip = (currentPage - 1) * resPerPage;
+    this.query = this.query.limit(resPerPage).skip(skip);
+    return this;
+  }
   generateResetPasswordToken = (userId) => {
     //generate token
     const resetToken = crypto.randomBytes(20).toString("hex");
