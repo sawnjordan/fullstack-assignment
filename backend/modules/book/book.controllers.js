@@ -3,6 +3,7 @@ const { z } = require("zod");
 const { bookServiceObj } = require("./book.services");
 const { Helpers } = require("../../helpers/helpers");
 class BookController {
+  //api/v1/books?keyword=book&
   getAllBooks = async (req, res, next) => {
     try {
       // return next({ status: 404, msg: "error" });
@@ -14,6 +15,7 @@ class BookController {
         status: "success",
         count: books.length,
         response: books,
+        resPerPage,
       });
     } catch (error) {
       console.log(error);
