@@ -3,23 +3,16 @@ const { z } = require("zod");
 const { bookServiceObj } = require("./book.services");
 const { Helpers } = require("../../helpers/helpers");
 class BookController {
-  //api/v1/books?keyword=book&
   getAllBooks = async (req, res, next) => {
     try {
-      // return next({ status: 404, msg: "error" });
       const queryStr = req.query;
-      const resPerPage = queryStr.page;
-      const count = await bookServiceObj.getTotalBookCount();
       // console.log(queryStr);
-      const helper = new Helpers(BookModel.find(), queryStr)
-        .searchBooks()
-        .pagination(resPerPage);
+      const helper = new Helpers(BookModel.find(), queryStr).searchBooks();
       const books = await helper.query;
       res.json({
         status: "success",
-        count,
+        count: books.length,
         response: books,
-        resPerPage,
       });
     } catch (error) {
       console.log(error);
