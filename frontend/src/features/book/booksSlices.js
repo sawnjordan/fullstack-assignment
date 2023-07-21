@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   books: [],
   count: "",
+  resPerPage: "",
   error: "",
 };
 
@@ -16,14 +17,19 @@ const initialState = {
 //   });
 // });
 
-export const fetchBooks = createAsyncThunk("book/fetchBooks", async () => {
-  try {
-    const response = await axios.get("http://localhost:5000/api/v1/books");
-    return response.data;
-  } catch (error) {
-    throw Error("Error fetching books: " + error.message);
+export const fetchBooks = createAsyncThunk(
+  "book/fetchBooks",
+  async (currentPage) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/v1/books?page=${currentPage}`
+      );
+      return response.data;
+    } catch (error) {
+      throw Error("Error fetching books: " + error.message);
+    }
   }
-});
+);
 
 export const booksSlice = createSlice({
   name: "books",
@@ -36,13 +42,12 @@ export const booksSlice = createSlice({
       state.loading = false;
       state.books = action.payload.response;
       state.count = action.payload.count;
+      state.resPerPage = action.payload.resPerPage;
       state.error = "";
     });
     builder.addCase(fetchBooks.rejected, (state, action) => {
       state.loading = false;
       state.books = [];
-      state.count = "";
-
       state.error = action.error;
     });
   },

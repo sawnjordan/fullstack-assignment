@@ -20,6 +20,13 @@ class Helpers {
     return this;
   };
 
+  pagination = (resPerPage) => {
+    const currentPage = parseInt(this.queryStr.page) || 1;
+    const skip = resPerPage * (currentPage - 1);
+    this.query = this.query.limit(resPerPage).skip(skip);
+    return this;
+  };
+
   generateResetPasswordToken = (userId) => {
     //generate token
     const resetToken = crypto.randomBytes(20).toString("hex");
