@@ -5,6 +5,7 @@ const initialState = {
   loading: false,
   books: [],
   count: "",
+  totalBooks: "",
   resPerPage: "",
   error: "",
 };
@@ -19,10 +20,11 @@ const initialState = {
 
 export const fetchBooks = createAsyncThunk(
   "book/fetchBooks",
-  async (currentPage) => {
+  async ({ keyword = "", currentPage = 1 }) => {
+    // console.log(keyword, currentPage);
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/v1/books?page=${currentPage}`
+        `http://localhost:5000/api/v1/books?page=${currentPage}&keyword=${keyword}`
       );
       return response.data;
     } catch (error) {
@@ -43,6 +45,7 @@ export const booksSlice = createSlice({
       state.books = action.payload.response;
       state.count = action.payload.count;
       state.resPerPage = action.payload.resPerPage;
+      state.totalBooks = action.payload.totalBooks;
       state.error = "";
     });
     builder.addCase(fetchBooks.rejected, (state, action) => {

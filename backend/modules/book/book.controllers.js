@@ -7,7 +7,7 @@ class BookController {
     try {
       const queryStr = req.query;
       const resPerPage = 4;
-      const count = await bookServiceObj.getTotalBookCount();
+      const totalBooks = await bookServiceObj.getTotalBookCount();
       // console.log(queryStr);
       const helper = new Helpers(
         BookModel.find().sort({ _id: "desc" }),
@@ -19,7 +19,8 @@ class BookController {
       setTimeout(() => {
         res.json({
           status: "success",
-          count,
+          count: books.length,
+          totalBooks,
           response: books,
           resPerPage,
         });
