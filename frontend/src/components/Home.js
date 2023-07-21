@@ -22,6 +22,7 @@ export const Home = () => {
   //   count = count;
   // }
   // console.log(count);
+  // console.log(location.pathname);
   const { keyword } = useParams();
   // console.log(books);
   // books.map((item) => console.log(item));
@@ -62,11 +63,7 @@ export const Home = () => {
               <Pagination
                 activePage={currentPage}
                 itemsCountPerPage={parseInt(resPerPage)}
-                totalItemsCount={
-                  location.pathname === "/"
-                    ? parseInt(totalBooks)
-                    : parseInt(count)
-                }
+                totalItemsCount={parseInt(count)}
                 onChange={setCurrentPageNum}
                 nextPageText={"Next"}
                 prevPageText={"Prev"}

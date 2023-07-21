@@ -20,6 +20,19 @@ class Helpers {
     return this;
   };
 
+  countBooks = async () => {
+    const keyword = this.queryStr.keyword
+      ? {
+          title: {
+            $regex: `\\b${this.queryStr.keyword}\\b`,
+            $options: "i",
+          },
+        }
+      : {};
+    return await this.query.find({ ...keyword }).countDocuments();
+    // console.log(this.query);
+  };
+
   pagination = (resPerPage) => {
     const currentPage = parseInt(this.queryStr.page) || 1;
     const skip = resPerPage * (currentPage - 1);

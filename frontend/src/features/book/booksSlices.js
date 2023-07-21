@@ -23,10 +23,25 @@ export const fetchBooks = createAsyncThunk(
   async ({ keyword = "", currentPage = 1 }) => {
     // console.log(keyword, currentPage);
     try {
-      const response = await axios.get(
-        `http://localhost:5000/api/v1/books?page=${currentPage}&keyword=${keyword}`
-      );
-      return response.data;
+      if (keyword === "" && currentPage === 1) {
+        const response = await axios.get(`http://localhost:5000/api/v1/books`);
+        return response.data;
+      } else if (keyword === "") {
+        const response = await axios.get(
+          `http://localhost:5000/api/v1/books?page=${currentPage}`
+        );
+        return response.data;
+      } else if (currentPage === 1) {
+        const response = await axios.get(
+          `http://localhost:5000/api/v1/books?keyword=${keyword}`
+        );
+        return response.data;
+      } else {
+        const response = await axios.get(
+          `http://localhost:5000/api/v1/books?page=${currentPage}&keyword=${keyword}`
+        );
+        return response.data;
+      }
     } catch (error) {
       throw Error("Error fetching books: " + error.message);
     }
