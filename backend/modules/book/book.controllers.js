@@ -9,11 +9,13 @@ class BookController {
       // console.log(queryStr);
       const helper = new Helpers(BookModel.find(), queryStr).searchBooks();
       const books = await helper.query;
-      res.json({
-        status: "success",
-        count: books.length,
-        response: books,
-      });
+      setTimeout(() => {
+        res.json({
+          status: "success",
+          count: books.length,
+          response: books,
+        });
+      }, 2000);
     } catch (error) {
       console.log(error);
       next(error);
