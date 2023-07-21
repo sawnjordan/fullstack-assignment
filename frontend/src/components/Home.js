@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { MetaData } from "./layout/MetaData";
 import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 import { fetchBooks } from "../features/book/booksSlices";
 import { Book } from "./book/Book";
 import { Loader } from "./layout/Loader";
@@ -10,6 +11,16 @@ export const Home = () => {
   const { loading, books, count, error } = useSelector((state) => state.books);
   // console.log(books);
   // books.map((item) => console.log(item));
+  if (!loading && error) {
+    toast(`${error.message}`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  }
   useEffect(() => {
     dispatch(fetchBooks());
   }, [dispatch]);

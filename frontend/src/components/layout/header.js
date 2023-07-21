@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "../../App.css";
 import React from "react";
 
@@ -7,7 +8,9 @@ export const Header = () => {
       <nav className="navbar row">
         <div className="col-12 col-md-3">
           <div className="navbar-brand">
-            <img src="/images/logo-book.jpg" />
+            <Link to="/">
+              <img src="/images/logo-book.jpg" />
+            </Link>
           </div>
         </div>
 

@@ -4,7 +4,6 @@ import axios from "axios";
 const initialState = {
   loading: false,
   book: [],
-  count: "",
   error: "",
 };
 
@@ -16,12 +15,14 @@ const initialState = {
 //   });
 // });
 
-export const fetchBook = createAsyncThunk("book/fetchBook", async () => {
+export const fetchBook = createAsyncThunk("book/fetchBook", async (id) => {
   try {
-    const response = await axios.get("http://localhost:5000/api/v1/books");
+    const response = await axios.get(
+      `http://localhost:5000/api/v1/books/${id}`
+    );
     return response.data;
   } catch (error) {
-    throw Error("Error fetching books: " + error.message);
+    throw Error("Error fetching book: " + error.message);
   }
 });
 
@@ -34,14 +35,12 @@ export const bookSlice = createSlice({
     });
     builder.addCase(fetchBook.fulfilled, (state, action) => {
       state.loading = false;
-      state.books = action.payload.response;
-      state.count = action.payload.count;
+      state.book = action.payload.response;
       state.error = "";
     });
     builder.addCase(fetchBook.rejected, (state, action) => {
       state.loading = false;
-      state.books = [];
-      state.count = "";
+      state.book = [];
 
       state.error = action.error;
     });

@@ -80,7 +80,9 @@ export const BookDetails = () => {
 
               <hr />
               <p id="product_seller mb-3">
-                Author: <strong>{book.author.join(" ,")}</strong>
+                {/* {console.log(book)} */}
+                Author/s:{" "}
+                <strong>{book.author ? book.author.join(", ") : ""}</strong>
               </p>
             </div>
           </div>
