@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 export const Search = ({ navigate }) => {
+  const location = useLocation();
   const [keyword, setKeyword] = useState("");
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setKeyword("");
+    }
+  }, [location.pathname]);
 
   const searchHandler = (e) => {
     e.preventDefault();
@@ -19,6 +27,7 @@ export const Search = ({ navigate }) => {
           id="search_field"
           className="form-control"
           placeholder="Enter Product Name ..."
+          value={keyword}
           onChange={(e) => {
             setKeyword(e.target.value);
           }}
