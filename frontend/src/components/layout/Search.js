@@ -6,7 +6,7 @@ export const Search = ({ navigate }) => {
   const searchHandler = (e) => {
     e.preventDefault();
     if (keyword.trim()) {
-      navigate(`/books/${keyword}`);
+      navigate(`/books/search/${keyword}`);
     } else {
       navigate("/");
     }

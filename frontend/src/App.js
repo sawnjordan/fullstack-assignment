@@ -10,8 +10,8 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} exact />
-        <Route path="/books/:keyword" element={<Home />} exact />
         <Route path="/books/:id" element={<BookDetails />} exact />
+        <Route path="/books/search/:keyword" element={<Home />} exact />
       </Routes>
       <Footer />
     </>
