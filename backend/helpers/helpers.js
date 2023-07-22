@@ -16,7 +16,6 @@ class Helpers {
         }
       : {};
     this.query = this.query.find({ ...keyword });
-    // console.log(this.query);
     return this;
   };
 
@@ -30,7 +29,6 @@ class Helpers {
         }
       : {};
     return await this.query.find({ ...keyword }).countDocuments();
-    // console.log(this.query);
   };
 
   pagination = (resPerPage) => {

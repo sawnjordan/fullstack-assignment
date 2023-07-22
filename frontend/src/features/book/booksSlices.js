@@ -10,18 +10,9 @@ const initialState = {
   error: "",
 };
 
-//Generates pending, fulfilled or rejected action types
-// export const fetchBooks = createAsyncThunk("book/fetchBooks", () => {
-//   axios.get("http://localhost:5000/api/v1/books").then((response) => {
-//     console.log(response);
-//     return response.data;
-//   });
-// });
-
 export const fetchBooks = createAsyncThunk(
   "book/fetchBooks",
   async ({ keyword = "", currentPage = 1 }) => {
-    // console.log(keyword, currentPage);
     try {
       if (keyword === "" && currentPage === 1) {
         const response = await axios.get(`http://localhost:5000/api/v1/books`);

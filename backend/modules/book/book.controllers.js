@@ -6,24 +6,21 @@ class BookController {
   getAllBooks = async (req, res, next) => {
     try {
       const queryStr = req.query;
-      const resPerPage = 2;
+      const resPerPage = 4;
       const totalBooks = await bookServiceObj.getTotalBookCount();
-      // console.log(queryStr);
       const helper = new Helpers(
         BookModel.find().sort({ _id: "desc" }),
         queryStr
       )
         .searchBooks()
         .pagination(resPerPage);
-      // const count = await helper.countDocuments();
       const books = await helper.query;
 
-      const test = new Helpers(
+      const coutnQuery = new Helpers(
         BookModel.find().sort({ _id: "desc" }),
         queryStr
       ).searchBooks();
-      const count = await test.countBooks();
-      // console.log(count);
+      const count = await coutnQuery.countBooks();
 
       setTimeout(() => {
         res.json({

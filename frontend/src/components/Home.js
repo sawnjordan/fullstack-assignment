@@ -6,26 +6,16 @@ import { fetchBooks } from "../features/book/booksSlices";
 import { Book } from "./book/Book";
 import { Loader } from "./layout/Loader";
 import Pagination from "react-js-pagination";
-import { useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export const Home = () => {
-  const location = useLocation();
-
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
   let { loading, books, count, resPerPage, totalBooks, error } = useSelector(
     (state) => state.books
   );
-  // if (location.pathname === "/") {
-  //   count = totalBooks;
-  // } else {
-  //   count = count;
-  // }
-  // console.log(count);
-  // console.log(location.pathname);
+
   const { keyword } = useParams();
-  // console.log(books);
-  // books.map((item) => console.log(item));
   if (!loading && error) {
     toast(`${error.message}`, {
       position: "top-right",
@@ -38,11 +28,13 @@ export const Home = () => {
   }
   useEffect(() => {
     dispatch(fetchBooks({ keyword, currentPage }));
+    setCurrentPage(1);
   }, [dispatch, currentPage, error, keyword]);
 
   function setCurrentPageNum(pageNumber) {
     setCurrentPage(pageNumber);
   }
+
   return (
     <>
       <div className="container container-fluid">

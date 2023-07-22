@@ -7,14 +7,6 @@ const initialState = {
   error: "",
 };
 
-//Generates pending, fulfilled or rejected action types
-// export const fetchBook = createAsyncThunk("book/fetchBook", () => {
-//   axios.get("http://localhost:5000/api/v1/books").then((response) => {
-//     console.log(response);
-//     return response.data;
-//   });
-// });
-
 export const fetchBook = createAsyncThunk("book/fetchBook", async (id) => {
   try {
     const response = await axios.get(
