@@ -27,8 +27,11 @@ export const Home = () => {
     });
   }
   useEffect(() => {
-    dispatch(fetchBooks({ keyword, currentPage }));
     setCurrentPage(1);
+  }, [keyword]);
+
+  useEffect(() => {
+    dispatch(fetchBooks({ keyword, currentPage }));
   }, [dispatch, currentPage, error, keyword]);
 
   function setCurrentPageNum(pageNumber) {
