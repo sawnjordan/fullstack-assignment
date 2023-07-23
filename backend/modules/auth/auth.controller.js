@@ -43,7 +43,7 @@ class AuthController {
       const { email, password } = req.body;
 
       if (!email || !password) {
-        res
+        return res
           .status(400)
           .json({ status: "failed", response: "Email and Password required." });
       }

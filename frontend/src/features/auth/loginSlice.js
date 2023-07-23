@@ -13,22 +13,25 @@ const config = {
     "Content-Type": "application/json",
   },
 };
-export const login = createAsyncThunk("auth/login", async (data) => {
-  try {
-    const data = {
-      email: "",
-      password: "",
-    };
-    const response = await axios.post(
-      "http://localhost:5000/api/v1/auth/login",
-      data,
-      config
-    );
-    return response.data;
-  } catch (error) {
-    throw Error("Error Logging in:" + error.message);
+export const login = createAsyncThunk(
+  "auth/login",
+  async ({ email, password }) => {
+    try {
+      const credentials = {
+        email,
+        password,
+      };
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/auth/login",
+        credentials,
+        config
+      );
+      return response.data;
+    } catch (error) {
+      throw Error("Error Logging in:" + error.message);
+    }
   }
-});
+);
 
 export const loginSlice = createSlice({
   name: "login",
@@ -42,6 +45,12 @@ export const loginSlice = createSlice({
       state.loading = false;
       state.user = action.payload.user;
       state.isAuthenticated = true;
+    });
+    builder.addCase(login.rejected, (state, action) => {
+      state.loading = false;
+      state.user = [];
+      state.isAuthenticated = false;
+      state.error = action.error;
     });
   },
 });
