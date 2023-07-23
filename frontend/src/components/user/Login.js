@@ -5,11 +5,12 @@ import { MetaData } from "../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 
 import { login } from "../../features/auth/loginSlice";
+import { toast } from "react-toastify";
 
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { laoding, isAuthenticated, error, user } = useSelector(
+  const { loading, isAuthenticated, error, user } = useSelector(
     (state) => state.login
   );
 
@@ -20,7 +21,18 @@ export const Login = () => {
     if (isAuthenticated) {
       navigate("/");
     }
-  }, [dispatch, isAuthenticated, error, navigate]);
+
+    if (!loading && error) {
+      toast(`${error.message}`, {
+        position: "top-left",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+  }, [dispatch, isAuthenticated, error, loading]);
 
   const loginSubmitHandler = (e) => {
     e.preventDefault();
@@ -28,7 +40,7 @@ export const Login = () => {
   };
   return (
     <>
-      {laoding ? (
+      {loading ? (
         <Loader />
       ) : (
         <>

@@ -14,7 +14,13 @@ export const fetchBook = createAsyncThunk("book/fetchBook", async (id) => {
     );
     return response.data;
   } catch (error) {
-    throw Error("Error fetching book: " + error.message);
+    if (error.response && error.response.data && error.response.data.response) {
+      // Extract the error message from the response and throw a new error with it
+      throw new Error(error.response.data.response);
+    } else {
+      // If there's no specific error message in the response, re-throw the original error
+      throw error;
+    }
   }
 });
 
