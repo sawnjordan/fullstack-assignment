@@ -3,9 +3,9 @@ import axios from "axios";
 
 const initialState = {
   loading: false,
-  user: "",
+  user: null,
   isAuthenticated: false,
-  error: "",
+  error: null,
 };
 // Axios configuration with headers
 const config = {
@@ -41,7 +41,7 @@ export const registerSlice = createSlice({
     });
     builder.addCase(register.rejected, (state, action) => {
       state.loading = false;
-      state.user = [];
+      state.user = null;
       state.isAuthenticated = false;
       state.error = action.error;
     });

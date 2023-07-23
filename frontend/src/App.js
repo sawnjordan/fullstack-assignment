@@ -6,6 +6,7 @@ import { BookDetails } from "./components/book/BookDetails";
 import { Login } from "./components/user/Login";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Register } from "./components/user/Register";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} exact />
         <Route path="/login" element={<Login />} exact />
+        <Route path="/register" element={<Register />} exact />
         <Route path="/books/:id" element={<BookDetails />} exact />
         <Route path="/books/search/:keyword" element={<Home />} exact />
       </Routes>
