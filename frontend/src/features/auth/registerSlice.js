@@ -10,7 +10,7 @@ const initialState = {
 // Axios configuration with headers
 const config = {
   headers: {
-    "Content-Type": "multipart/form-data",
+    "Content-Type": "application/json",
   },
 };
 export const register = createAsyncThunk("auth/register", async (userData) => {
@@ -22,7 +22,12 @@ export const register = createAsyncThunk("auth/register", async (userData) => {
     );
     return response.data;
   } catch (error) {
-    throw Error("Error Logging in:" + error.message);
+    if (error.response && error.response.data && error.response.data.msg) {
+      const err = error.response.data.msg;
+      const errorValues = Object.values(err);
+      const errMsg = errorValues.join(", ");
+      throw Error(errMsg);
+    }
   }
 });
 

@@ -24,8 +24,6 @@ class AuthServices {
       return response;
     } catch (error) {
       console.log(error);
-      // console.log("first");
-      // console.log(JSON.stringify(error));
       const errors = error.errors;
       let errorBags = {};
       errors?.map((item) => {
@@ -37,7 +35,8 @@ class AuthServices {
           item.code == "too_big"
         ) {
           errorBags[item.path[0]] = item.message;
-        } else {
+        } else if (item.code === "invalid_string") {
+          errorBags[item.path[0]] = item.message;
         }
       });
       // console.log(errorBags);

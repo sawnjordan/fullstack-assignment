@@ -34,7 +34,8 @@ class AuthController {
 
       //   res.status(201).json({ status: "User Created.", response: jwtToken });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      next(error);
     }
   };
 
