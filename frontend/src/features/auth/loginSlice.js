@@ -1,17 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import initialState from "../initialState";
+import { UPDATE_USER_STATE } from "./userActionTypes";
 
-const initialState = {
-  loading: false,
-  user: "",
-  isAuthenticated: false,
-  error: null,
-};
 // Axios configuration with headers
 const config = {
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 };
 export const login = createAsyncThunk(
   "auth/login",
@@ -33,10 +30,8 @@ export const login = createAsyncThunk(
         error.response.data &&
         error.response.data.response
       ) {
-        // Extract the error message from the response and throw a new error with it
         throw Error(error.response.data.response);
       } else {
-        // If there's no specific error message in the response, re-throw the original error
         throw error;
       }
     }
@@ -63,6 +58,12 @@ export const loginSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
       state.error = action.error;
+    });
+    builder.addCase(UPDATE_USER_STATE, (state, action) => {
+      state.loading = action.payload.loading;
+      state.user = action.payload.user;
+      state.isAuthenticated = action.payload.isAuthenticated;
+      state.error = action.payload.error;
     });
   },
 });

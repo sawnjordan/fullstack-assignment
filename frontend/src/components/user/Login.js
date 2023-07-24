@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { login } from "../../features/auth/loginSlice";
 import { toast } from "react-toastify";
+import { UPDATE_USER_STATE } from "../../features/auth/userActionTypes";
+import { store } from "../../store";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -33,6 +35,16 @@ export const Login = () => {
       });
     }
   }, [dispatch, isAuthenticated, error, loading]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const loginState = store.getState().login;
+      dispatch({
+        type: UPDATE_USER_STATE,
+        payload: loginState,
+      });
+    }
+  }, [dispatch, isAuthenticated]);
 
   const loginSubmitHandler = (e) => {
     e.preventDefault();

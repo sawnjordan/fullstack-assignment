@@ -5,7 +5,13 @@ require("dotenv").config();
 const cors = require("cors");
 
 // Allow requests from all origins. You can specify specific origins if needed.
-app.use(cors());
+app.use(
+  "*",
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 //body parser
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

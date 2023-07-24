@@ -63,6 +63,7 @@ class AuthServices {
         Date.now() + process.env.COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
       ),
       httpOnly: true,
+      secure: false,
     };
     res.status(statusCode).cookie("token", jwtToken, options).json({
       status: "success",

@@ -5,16 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { register } from "../../features/auth/registerSlice";
 import { toast } from "react-toastify";
+import { UPDATE_USER_STATE } from "../../features/auth/userActionTypes";
+import { store } from "../../store";
 
 export const Register = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const [name, setName] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
   const { loading, user, isAuthenticated, error } = useSelector(
     (state) => state.register
   );
+  const payload = useSelector((state) => state.register);
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",
@@ -44,17 +44,33 @@ export const Register = () => {
     }
   }, [dispatch, isAuthenticated, error, loading]);
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      const registerState = store.getState().register;
+      dispatch({
+        type: UPDATE_USER_STATE,
+        payload: registerState,
+      });
+    }
+  }, [dispatch, isAuthenticated]);
+
   const handleChange = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
   const registerSubmitHandler = (e) => {
     e.preventDefault();
+    const registerState = store.getState().register;
+
     const formData = {
       name: newUser.name,
       email: newUser.email,
       password: newUser.password,
     };
     dispatch(register(formData));
+    dispatch({
+      type: UPDATE_USER_STATE,
+      payload: registerState,
+    });
   };
   return (
     <>

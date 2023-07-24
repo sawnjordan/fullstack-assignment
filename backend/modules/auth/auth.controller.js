@@ -87,7 +87,6 @@ class AuthController {
 
   getUserProfile = async (req, res, next) => {
     try {
-      console.log(req.user);
       const user = await UserModel.findById(req.user.id);
       res.status(200).json({ status: "success", response: user });
     } catch (error) {

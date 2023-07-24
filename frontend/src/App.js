@@ -4,11 +4,32 @@ import { Footer } from "./components/layout/Footer";
 import { Home } from "./components/Home";
 import { BookDetails } from "./components/book/BookDetails";
 import { Login } from "./components/user/Login";
+import { Register } from "./components/user/Register";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Register } from "./components/user/Register";
+import { loadUser } from "./features/auth/loadUserSlice";
+import { store } from "./store";
+import { useEffect } from "react";
+import { UPDATE_USER_STATE } from "./features/auth/userActionTypes";
+import { useDispatch, useSelector } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+  const { loading, isAuthenticated, error, user } = useSelector(
+    (state) => state.loadUser
+  );
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch({
+        type: UPDATE_USER_STATE,
+        payload: { loading, isAuthenticated, error, user },
+      });
+    }
+  }, [dispatch, isAuthenticated, loading, error, user]);
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch]);
   return (
     <>
       <ToastContainer />

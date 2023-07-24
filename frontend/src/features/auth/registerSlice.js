@@ -1,17 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import initialState from "../initialState";
+import { UPDATE_USER_STATE } from "./userActionTypes";
 
-const initialState = {
-  loading: false,
-  user: null,
-  isAuthenticated: false,
-  error: null,
-};
 // Axios configuration with headers
 const config = {
   headers: {
     "Content-Type": "application/json",
   },
+  withCredentials: true,
 };
 export const register = createAsyncThunk("auth/register", async (userData) => {
   try {
@@ -49,6 +46,12 @@ export const registerSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
       state.error = action.error;
+    });
+    builder.addCase(UPDATE_USER_STATE, (state, action) => {
+      state.loading = action.payload.loading;
+      state.user = action.payload.user;
+      state.isAuthenticated = action.payload.isAuthenticated;
+      state.error = action.payload.error;
     });
   },
 });
