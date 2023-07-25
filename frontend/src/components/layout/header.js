@@ -1,14 +1,41 @@
 import { Link } from "react-router-dom";
 import "../../App.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { Search } from "./Search";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Dropdown } from "react-bootstrap";
+import { logout } from "../../features/auth/logoutSlice";
+import { toast } from "react-toastify";
+import { UPDATE_USER_STATE } from "../../features/auth/userActionTypes";
 
 export const Header = () => {
   const navigate = useNavigate();
-  const { user, loading } = useSelector((state) => state.loadUser);
+  const dispatch = useDispatch();
+  const { user, loading, isAuthenticated, error } = useSelector(
+    (state) => state.logoutUser
+  );
+
+  const logoutHandler = () => {
+    dispatch(logout());
+    toast(`Logged out Successfully.`, {
+      position: "top-right",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+    dispatch({
+      type: UPDATE_USER_STATE,
+      payload: {
+        loading: false,
+        isAuthenticated: false,
+        error: null,
+        user: null,
+      },
+    });
+  };
 
   return (
     <nav className="navbar row">
@@ -47,7 +74,12 @@ export const Header = () => {
                   Dashboard
                 </Dropdown.Item>
               )}
-              <Dropdown.Item as={Link} to="/" className="text-danger">
+              <Dropdown.Item
+                as={Link}
+                to="/"
+                className="text-danger"
+                onClick={logoutHandler}
+              >
                 Logout
               </Dropdown.Item>
             </Dropdown.Menu>
