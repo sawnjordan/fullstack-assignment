@@ -614,3 +614,11 @@ ul.CTAs a {
   font-size: 0.8rem;
   color: grey;
 }
+.dropdown-item:hover {
+  background-color: #febd69;
+  color: #212529;
+}
+
+.dropdown-menu {
+  min-width: 8rem;
+}
