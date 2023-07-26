@@ -14,6 +14,7 @@ import { UPDATE_USER_STATE } from "./features/auth/userActionTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { Profile } from "./components/user/Profile";
 import { ProtectedRoute } from "./components/routes/ProtectedRoutes";
+import { UpdateProfile } from "./components/user/UpdateProfile";
 
 function App() {
   const dispatch = useDispatch();
@@ -42,6 +43,11 @@ function App() {
         <Route
           path="/me"
           element={<ProtectedRoute Component={Profile} />}
+          exact
+        />
+        <Route
+          path="/me/update"
+          element={<ProtectedRoute Component={UpdateProfile} />}
           exact
         />
         <Route path="/register" element={<Register />} exact />

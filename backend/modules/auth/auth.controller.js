@@ -263,7 +263,7 @@ class AuthController {
         user._id
       );
       res.status(200).json({
-        status: "success",
+        status: true,
         updatedUser,
       });
     } catch (error) {

@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { UPDATE_USER_STATE } from "./userActionTypes";
-import initialState from "../initialState";
+import { UPDATE_USER_STATE } from "../auth/userActionTypes";
+
+const UPDATE_PROFILE_RESET = "UPDATE_PROFILE_RESET";
 
 const initialState = {};
 
@@ -12,10 +13,10 @@ const config = {
   },
   withCredentials: true,
 };
-export const register = createAsyncThunk("auth/register", async (userData) => {
+export const updateUser = createAsyncThunk("auth/update", async (userData) => {
   try {
-    const response = await axios.post(
-      "http://localhost:5000/api/v1/auth/register",
+    const response = await axios.put(
+      "http://localhost:5000/api/v1/auth/me/update",
       userData,
       config
     );
@@ -34,19 +35,16 @@ export const updateSlice = createSlice({
   name: "updateUser",
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(register.pending, (state) => {
+    builder.addCase(updateUser.pending, (state) => {
       state.loading = true;
-      state.isAuthenticated = false;
     });
-    builder.addCase(register.fulfilled, (state, action) => {
+    builder.addCase(updateUser.fulfilled, (state, action) => {
       state.loading = false;
-      state.user = action.payload.user;
-      state.isAuthenticated = true;
+      state.user = action.payload.updatedUser;
+      state.isUpdated = action.payload.status;
     });
-    builder.addCase(register.rejected, (state, action) => {
+    builder.addCase(updateUser.rejected, (state, action) => {
       state.loading = false;
-      state.user = null;
-      state.isAuthenticated = false;
       state.error = action.error;
     });
     builder.addCase(UPDATE_USER_STATE, (state, action) => {
@@ -54,6 +52,9 @@ export const updateSlice = createSlice({
       state.user = action.payload.user;
       state.isAuthenticated = action.payload.isAuthenticated;
       state.error = action.payload.error;
+    });
+    builder.addCase(UPDATE_PROFILE_RESET, (state) => {
+      state.isUpdated = false;
     });
   },
 });
