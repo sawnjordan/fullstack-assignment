@@ -16,6 +16,7 @@ import { Profile } from "./components/user/Profile";
 import { ProtectedRoute } from "./components/routes/ProtectedRoutes";
 import { UpdateProfile } from "./components/user/UpdateProfile";
 import { UpdatePassword } from "./components/user/UpdatePassword";
+import { Loader } from "./components/layout/Loader";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,10 @@ function App() {
   useEffect(() => {
     dispatch(loadUser());
   }, [dispatch]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <>
