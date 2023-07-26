@@ -66,7 +66,7 @@ class AuthServices {
       secure: false,
     };
     res.status(statusCode).cookie("token", jwtToken, options).json({
-      status: "success",
+      status: true,
       jwtToken,
       user,
     });

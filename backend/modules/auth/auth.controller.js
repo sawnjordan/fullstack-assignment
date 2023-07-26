@@ -243,7 +243,10 @@ class AuthController {
       const hashedPassword = bcrypt.hashSync(req.body.password, 10);
       user.password = hashedPassword;
       const updatedUser = await authServicesObj.updateUser(user, user._id);
-      authServicesObj.generateJWTAndSetCookie(200, updatedUser, res);
+      res.status(200).json({
+        status: true,
+        updatedUser,
+      });
     } catch (error) {
       console.log(error);
       next(error);

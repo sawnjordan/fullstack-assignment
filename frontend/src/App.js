@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Profile } from "./components/user/Profile";
 import { ProtectedRoute } from "./components/routes/ProtectedRoutes";
 import { UpdateProfile } from "./components/user/UpdateProfile";
+import { UpdatePassword } from "./components/user/UpdatePassword";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ function App() {
   useEffect(() => {
     dispatch(loadUser());
   }, [dispatch]);
+
   return (
     <>
       <ToastContainer />
@@ -43,6 +45,11 @@ function App() {
         <Route
           path="/me"
           element={<ProtectedRoute Component={Profile} />}
+          exact
+        />
+        <Route
+          path="/password/update"
+          element={<ProtectedRoute Component={UpdatePassword} />}
           exact
         />
         <Route
