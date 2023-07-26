@@ -57,7 +57,7 @@ export const Header = () => {
             <Dropdown.Toggle
               variant="default"
               id="dropDownMenuButton"
-              className="btn btn-block text-white"
+              className="btn btn-block text-white mr-5"
             >
               {user.name}
             </Dropdown.Toggle>

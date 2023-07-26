@@ -200,13 +200,10 @@ class AuthController {
         };
       }
       const hashedPassword = bcrypt.hashSync(password, 10);
-      console.log(user);
       user.password = hashedPassword;
       user.resetPasswordToken = null;
       user.resetPasswordExpire = null;
-      // console.log(user);
       let updatedUser = await authServicesObj.updateUser(user, user._id);
-      // console.log(updatedUser);
       if (updatedUser) {
         res.status(200).json({
           status: "success",
@@ -215,6 +212,38 @@ class AuthController {
       } else {
         next({ status: 200, msg: "Unable to update the password." });
       }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
+
+  updatePassword = async (req, res, next) => {
+    try {
+      if (req.body.oldPassword === "") {
+        return res.status(400).json({
+          status: "failed",
+          msg: "Please enter the Old Password.",
+        });
+      }
+      const user = await UserModel.findById(req.user.id);
+
+      const isPasswordMatch = await bcrypt.compare(
+        req.body.oldPassword,
+        user.password
+      );
+
+      if (!isPasswordMatch) {
+        throw {
+          status: 401,
+          msg: "Old password is incorrect.",
+        };
+      }
+
+      const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+      user.password = hashedPassword;
+      const updatedUser = await authServicesObj.updateUser(user, user._id);
+      authServicesObj.generateJWTAndSetCookie(200, updatedUser, res);
     } catch (error) {
       console.log(error);
       next(error);

@@ -13,6 +13,12 @@ router.post("/forgot-password", authControllerObj.forgotPassword);
 
 router.post("/reset-password/:token", authControllerObj.resetPassword);
 
+router.put(
+  "/update-password/",
+  isUserAuthenticated,
+  authControllerObj.updatePassword
+);
+
 router.get("/logout", authControllerObj.logoutUser);
 
 router.get("/me", isUserAuthenticated, authControllerObj.getUserProfile);
