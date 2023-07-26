@@ -226,7 +226,7 @@ class AuthController {
           msg: "Please enter the Old Password.",
         });
       }
-      const user = await UserModel.findById(req.user.id);
+      const user = req.user;
 
       const isPasswordMatch = await bcrypt.compare(
         req.body.oldPassword,
@@ -244,6 +244,28 @@ class AuthController {
       user.password = hashedPassword;
       const updatedUser = await authServicesObj.updateUser(user, user._id);
       authServicesObj.generateJWTAndSetCookie(200, updatedUser, res);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
+
+  updateProfile = async (req, res, next) => {
+    try {
+      const { name, email } = req.body;
+      const user = req.user;
+      const newUserData = {
+        name,
+        email,
+      };
+      const updatedUser = await authServicesObj.updateUser(
+        newUserData,
+        user._id
+      );
+      res.status(200).json({
+        status: "success",
+        updatedUser,
+      });
     } catch (error) {
       console.log(error);
       next(error);

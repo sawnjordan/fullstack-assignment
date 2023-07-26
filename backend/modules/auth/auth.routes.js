@@ -19,6 +19,8 @@ router.put(
   authControllerObj.updatePassword
 );
 
+router.put("/me/update", isUserAuthenticated, authControllerObj.updateProfile);
+
 router.get("/logout", authControllerObj.logoutUser);
 
 router.get("/me", isUserAuthenticated, authControllerObj.getUserProfile);
