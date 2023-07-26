@@ -12,6 +12,7 @@ import { store } from "./store";
 import { useEffect } from "react";
 import { UPDATE_USER_STATE } from "./features/auth/userActionTypes";
 import { useDispatch, useSelector } from "react-redux";
+import { Profile } from "./components/user/Profile";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} exact />
         <Route path="/login" element={<Login />} exact />
+        <Route path="/me" element={<Profile />} exact />
         <Route path="/register" element={<Register />} exact />
         <Route path="/books/:id" element={<BookDetails />} exact />
         <Route path="/books/search/:keyword" element={<Home />} exact />
