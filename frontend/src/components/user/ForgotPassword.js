@@ -9,12 +9,11 @@ import { store } from "../../store";
 import { UPDATE_USER_STATE } from "../../features/auth/userActionTypes";
 
 export const ForgotPassword = () => {
-  const UPDATE_PROFILE_RESET = "UPDATE_PROFILE_RESET";
   const CLEAR_ERRORS = "CLEAR_ERRORS";
+  const CLEAR_MESSAGE = "CLEAR_MESSAGE";
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.loadUser);
 
   const { error, message, loading } = useSelector(
     (state) => state.forgotPassword
@@ -43,6 +42,9 @@ export const ForgotPassword = () => {
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
+      });
+      dispatch({
+        type: CLEAR_MESSAGE,
       });
     }
   }, [error, dispatch, message, loading]);

@@ -48,7 +48,7 @@ class Helpers {
       .update(resetToken)
       .digest("hex");
     const resetPasswordExpire = Date.now() + 30 * 60 * 1000;
-    console.log(resetPasswordExpire);
+    // console.log(resetPasswordExpire);
     authServicesObj.updateUser(
       { resetPasswordToken, resetPasswordExpire },
       userId

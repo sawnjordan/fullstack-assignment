@@ -141,9 +141,10 @@ class AuthController {
       } else {
         //get reset token
         const { resetToken } = helperObj.generateResetPasswordToken(user._id);
-        const resetURL = `${req.protocol}://${req.get(
-          "host"
-        )}/api/v1/auth/reset-password/${resetToken}`;
+        // const resetURL = `${req.protocol}://${req.get(
+        //   "host"
+        // )}/api/v1/auth/reset-password/${resetToken}`;
+        const resetURL = `${process.env.FRONTEND_URL}/auth/reset-password/${resetToken}`;
         const message = `<p><stong>Dear ${user.name} 🙂,</stong></p><p>Your Password Reset token is as follow:</p><br/> 
         <a href="${resetURL}">${resetURL}</a>
         
@@ -204,7 +205,7 @@ class AuthController {
       let updatedUser = await authServicesObj.updateUser(user, user._id);
       if (updatedUser) {
         res.status(200).json({
-          status: "success",
+          msg: true,
           response: "Password changed/updated successfully",
         });
       } else {
