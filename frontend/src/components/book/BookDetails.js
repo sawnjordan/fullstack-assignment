@@ -5,6 +5,7 @@ import { fetchBook } from "../../features/book/bookSlices";
 import { useParams } from "react-router-dom";
 import { Loader } from "../layout/Loader";
 import { MetaData } from "../layout/MetaData";
+import { addItemsToCart } from "../../features/book/cartSlice";
 
 export const BookDetails = () => {
   const { id } = useParams();
@@ -38,6 +39,10 @@ export const BookDetails = () => {
 
     const stock = count.valueAsNumber - 1;
     setQuantity(stock);
+  };
+
+  const addToCart = () => {
+    dispatch(addItemsToCart({ id, quantity }));
   };
 
   return (
@@ -82,6 +87,8 @@ export const BookDetails = () => {
                 type="button"
                 id="cart_btn"
                 className="btn btn-primary d-inline ml-4"
+                disabled={book.stock === 0 ? true : false}
+                onClick={addToCart}
               >
                 Add to Cart
               </button>

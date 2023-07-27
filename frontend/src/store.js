@@ -7,6 +7,11 @@ import loadUserReducer from "./features/auth/loadUserSlice";
 import logoutReducer from "./features/auth/logoutSlice";
 import updateReducer from "./features/user/updateSlice";
 import forgotPasswordReducer from "./features/user/forgotPasswordSlice";
+import addToCartReducer from "./features/book/cartSlice";
+
+const cartItemsFromStorage = localStorage.getItem("cartItems")
+  ? JSON.parse(localStorage.getItem("cartItems"))
+  : [];
 
 export const store = configureStore({
   reducer: {
@@ -18,5 +23,11 @@ export const store = configureStore({
     logoutUser: logoutReducer,
     updateUser: updateReducer,
     forgotPassword: forgotPasswordReducer,
+    addToCart: addToCartReducer,
+  },
+  preloadedState: {
+    addToCart: {
+      cartItems: cartItemsFromStorage,
+    },
   },
 });
