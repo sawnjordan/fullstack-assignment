@@ -18,6 +18,11 @@ export const ForgotPassword = () => {
   const { error, message, loading } = useSelector(
     (state) => state.forgotPassword
   );
+  const { isAuthenticated } = useSelector((state) => state.loadUser);
+
+  if (isAuthenticated) {
+    navigate("/");
+  }
 
   useEffect(() => {
     if (!loading && error) {
