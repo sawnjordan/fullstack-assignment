@@ -87,7 +87,7 @@ export const Login = () => {
                 </div>
 
                 <Link
-                  to="/forget-password"
+                  to="/forgot-password"
                   href="#"
                   className="float-right mb-4"
                 >

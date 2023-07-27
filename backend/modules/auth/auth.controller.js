@@ -133,7 +133,6 @@ class AuthController {
     try {
       const { email } = req.body;
       const user = await UserModel.findOne({ email });
-      // console.log(user.id);
       if (!user) {
         res.json({
           status: 404,
@@ -142,11 +141,9 @@ class AuthController {
       } else {
         //get reset token
         const { resetToken } = helperObj.generateResetPasswordToken(user._id);
-        // console.log(resetToken);
         const resetURL = `${req.protocol}://${req.get(
           "host"
         )}/api/v1/auth/reset-password/${resetToken}`;
-        // console.log(req.get("host"));
         const message = `<p><stong>Dear ${user.name} 🙂,</stong></p><p>Your Password Reset token is as follow:</p><br/> 
         <a href="${resetURL}">${resetURL}</a>
         
@@ -162,10 +159,11 @@ class AuthController {
         res.json({
           status: "success",
           response: `Email Sent:${sendMailSuccess.messageId}`,
+          msg: `Email sent to: ${user.email}`,
         });
       }
     } catch (error) {
-      console.log(error);
+      console.log("error");
       next(error);
     }
   };

@@ -17,6 +17,7 @@ import { ProtectedRoute } from "./components/routes/ProtectedRoutes";
 import { UpdateProfile } from "./components/user/UpdateProfile";
 import { UpdatePassword } from "./components/user/UpdatePassword";
 import { Loader } from "./components/layout/Loader";
+import { ForgotPassword } from "./components/user/ForgotPassword";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ function App() {
           exact
         />
         <Route path="/register" element={<Register />} exact />
+        <Route path="/forgot-password" element={<ForgotPassword />} exact />
         <Route path="/books/:id" element={<BookDetails />} exact />
         <Route path="/books/search/:keyword" element={<Home />} exact />
       </Routes>

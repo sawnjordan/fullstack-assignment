@@ -6,6 +6,7 @@ import registerReducer from "./features/auth/registerSlice";
 import loadUserReducer from "./features/auth/loadUserSlice";
 import logoutReducer from "./features/auth/logoutSlice";
 import updateReducer from "./features/user/updateSlice";
+import forgotPasswordReducer from "./features/user/forgotPasswordSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +17,6 @@ export const store = configureStore({
     loadUser: loadUserReducer,
     logoutUser: logoutReducer,
     updateUser: updateReducer,
+    forgotPassword: forgotPasswordReducer,
   },
 });
