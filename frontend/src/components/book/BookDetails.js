@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { fetchBook } from "../../features/book/bookSlices";
@@ -9,6 +9,7 @@ import { MetaData } from "../layout/MetaData";
 export const BookDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
+  const [quantity, setQuantity] = useState(1);
   const { loading, book, error } = useSelector((state) => state.book);
   if (!loading && error) {
     toast(`${error.message}`, {
@@ -23,6 +24,21 @@ export const BookDetails = () => {
   useEffect(() => {
     dispatch(fetchBook(id));
   }, [dispatch]);
+
+  const increaseQty = () => {
+    const count = document.querySelector(".count");
+    if (count.valueAsNumber >= book.stock) return;
+
+    const stock = count.valueAsNumber + 1;
+    setQuantity(stock);
+  };
+  const decreaseQty = () => {
+    const count = document.querySelector(".count");
+    if (count.valueAsNumber <= 1) return;
+
+    const stock = count.valueAsNumber - 1;
+    setQuantity(stock);
+  };
 
   return (
     <>
@@ -47,16 +63,20 @@ export const BookDetails = () => {
 
               <p id="product_price">${book.price}</p>
               <div className="stockCounter d-inline">
-                <span className="btn btn-danger minus">-</span>
+                <span className="btn btn-danger minus" onClick={decreaseQty}>
+                  -
+                </span>
 
                 <input
                   type="number"
                   className="form-control count d-inline"
-                  value="1"
+                  value={quantity}
                   readOnly
                 />
 
-                <span className="btn btn-primary plus">+</span>
+                <span className="btn btn-primary plus" onClick={increaseQty}>
+                  +
+                </span>
               </div>
               <button
                 type="button"
