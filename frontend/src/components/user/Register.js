@@ -34,7 +34,7 @@ export const Register = () => {
       errorMessagesArray.forEach((errorMsg) => {
         toast(errorMsg, {
           position: "top-left",
-          autoClose: 2000,
+          autoClose: 1000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,

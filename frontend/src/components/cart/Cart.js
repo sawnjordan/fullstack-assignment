@@ -13,6 +13,14 @@ export const Cart = () => {
   const { cartItems } = useSelector((state) => state.addToCart);
   const removeCartItemHandler = (id) => {
     dispatch(removeItemsFromCart(id));
+    toast(`Book Removed.`, {
+      position: "bottom-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   const increaseQty = (id, quantity, stock) => {
@@ -34,6 +42,21 @@ export const Cart = () => {
     };
 
     dispatch(addItemsToCart(cartData));
+  };
+
+  const calculateTotalQuantity = () => {
+    let totalQuantity = 0;
+    for (const item of cartItems) {
+      totalQuantity += item.quantity;
+    }
+    return totalQuantity;
+  };
+  const calculateTotalPrice = () => {
+    let totalPrice = 0;
+    for (const item of cartItems) {
+      totalPrice += item.price * item.quantity;
+    }
+    return totalPrice.toFixed(2);
   };
   return (
     <>
@@ -119,11 +142,15 @@ export const Cart = () => {
                   <hr />
                   <p>
                     Subtotal:{" "}
-                    <span className="order-summary-values">3 (Units)</span>
+                    <span className="order-summary-values">
+                      {calculateTotalQuantity()} (Items)
+                    </span>
                   </p>
                   <p>
                     Est. total:{" "}
-                    <span className="order-summary-values">$765.56</span>
+                    <span className="order-summary-values">
+                      ${calculateTotalPrice()}
+                    </span>
                   </p>
 
                   <hr />

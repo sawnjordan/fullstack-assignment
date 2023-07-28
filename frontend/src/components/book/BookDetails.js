@@ -15,7 +15,7 @@ export const BookDetails = () => {
   if (!loading && error) {
     toast(`${error.message}`, {
       position: "top-right",
-      autoClose: 2000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -43,6 +43,14 @@ export const BookDetails = () => {
 
   const addToCart = () => {
     dispatch(addItemsToCart({ id, quantity }));
+    toast(`Book Added To Cart.`, {
+      position: "bottom-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   return (

@@ -22,15 +22,13 @@ class BookController {
       ).searchBooks();
       const count = await coutnQuery.countBooks();
 
-      setTimeout(() => {
-        res.json({
-          status: "success",
-          count,
-          totalBooks,
-          response: books,
-          resPerPage,
-        });
-      }, 2000);
+      res.json({
+        status: "success",
+        count,
+        totalBooks,
+        response: books,
+        resPerPage,
+      });
     } catch (error) {
       console.log(error);
       next(error);

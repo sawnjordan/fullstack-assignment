@@ -25,7 +25,7 @@ export const UpdatePassword = () => {
     if (!loading && error) {
       toast(`${error.message}`, {
         position: "top-left",
-        autoClose: 2000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -39,7 +39,7 @@ export const UpdatePassword = () => {
     if (isUpdated) {
       toast("Password Updated Successfully.", {
         position: "top-left",
-        autoClose: 2000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
