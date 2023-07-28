@@ -13,7 +13,7 @@ export const addItemsToCart = createAsyncThunk(
         `http://localhost:5000/api/v1/books/${id}`
       );
       return {
-        book_id: data.response.id,
+        book_id: data.response._id,
         title: data.response.title,
         price: data.response.price,
         stock: data.response.stock,

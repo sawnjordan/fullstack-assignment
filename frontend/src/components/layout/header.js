@@ -15,6 +15,7 @@ export const Header = () => {
   const { user, loading, isAuthenticated, error } = useSelector(
     (state) => state.logoutUser
   );
+  const { cartItems } = useSelector((state) => state.addToCart);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -98,7 +99,7 @@ export const Header = () => {
         <Link to="/cart" className="ml-4">
           <span id="cart">Cart</span>
           <span className="ml-1" id="cart_count">
-            2
+            {cartItems.length}
           </span>
         </Link>
       </div>
