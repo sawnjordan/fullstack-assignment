@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { useDispatch } from "react-redux";
 
 const initialState = {
   cartItems: [],
@@ -34,24 +33,36 @@ export const addItemsToCart = createAsyncThunk(
     }
   }
 );
+export const removeItemsFromCart = createAsyncThunk(
+  "book/removeFromCart",
+  async (id) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:5000/api/v1/books/${id}`
+      );
+      return {
+        book_id: data.response._id,
+      };
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.response
+      ) {
+        // Extract the error message from the response and throw a new error with it
+        throw new Error(error.response.data.response);
+      } else {
+        // If there's no specific error message in the response, re-throw the original error
+        throw error;
+      }
+    }
+  }
+);
 
 export const addToCartSlice = createSlice({
   name: "book/addToCart",
   initialState,
   extraReducers: (builder) => {
-    // builder.addCase(fetchBook.pending, (state) => {
-    //   state.loading = true;
-    // });
-    // builder.addCase(fetchBook.fulfilled, (state, action) => {
-    //   state.loading = false;
-    //   state.book = action.payload.response;
-    //   state.error = "";
-    // });
-    // builder.addCase(fetchBook.rejected, (state, action) => {
-    //   state.loading = false;
-    //   state.book = [];
-    //   state.error = action.error;
-    // });
     builder.addCase(addItemsToCart.fulfilled, (state, action) => {
       const item = action.payload;
       const itemExistsInCart = state.cartItems.find(
@@ -66,10 +77,14 @@ export const addToCartSlice = createSlice({
       }
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     });
+    builder.addCase(removeItemsFromCart.fulfilled, (state, action) => {
+      const { book_id } = action.payload;
+      state.cartItems = state.cartItems.filter(
+        (item) => item.book_id !== book_id
+      );
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    });
   },
 });
-
-// Action creators are generated for each case reducer function
-// export const {} = addToCartSlice.actions;
 
 export default addToCartSlice.reducer;
