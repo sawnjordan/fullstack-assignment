@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { MetaData } from "../layout/MetaData";
 import { toast } from "react-toastify";
+import { CheckoutSteps } from "./CheckoutSteps";
 export const Shipping = () => {
   const navigate = useNavigate();
   const SAVE_SHIPPING_INFO = "SAVE_SHIPPING_INFO";
@@ -22,6 +23,7 @@ export const Shipping = () => {
     <>
       <div className="container container-fluid">
         <MetaData title={"Shipping Info"} />
+        <CheckoutSteps shipping />
         <div className="row wrapper">
           <div className="col-10 col-lg-5">
             <form className="shadow-lg" onSubmit={submitHandler}>
