@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const SAVE_SHIPPING_INFO = "SAVE_SHIPPING_INFO";
 const initialState = {
   cartItems: [],
+  shippingInfo: {},
 };
 export const addItemsToCart = createAsyncThunk(
   "book/addToCart",
@@ -83,6 +85,10 @@ export const addToCartSlice = createSlice({
         (item) => item.book_id !== book_id
       );
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
+    });
+    builder.addCase(SAVE_SHIPPING_INFO, (state, action) => {
+      state.shippingInfo = action.payload;
+      localStorage.setItem("shippingInfo", JSON.stringify(state.shippingInfo));
     });
   },
 });

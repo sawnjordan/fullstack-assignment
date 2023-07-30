@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MetaData } from "../layout/MetaData";
 import { toast } from "react-toastify";
 import {
@@ -10,6 +10,7 @@ import {
 
 export const Cart = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { cartItems } = useSelector((state) => state.addToCart);
   const removeCartItemHandler = (id) => {
     dispatch(removeItemsFromCart(id));
@@ -57,6 +58,9 @@ export const Cart = () => {
       totalPrice += item.price * item.quantity;
     }
     return totalPrice.toFixed(2);
+  };
+  const checkoutHandler = () => {
+    navigate("/login?redirect=shipping");
   };
   return (
     <>
@@ -157,6 +161,7 @@ export const Cart = () => {
                   <button
                     id="checkout_btn"
                     className="btn btn-primary btn-block"
+                    onClick={checkoutHandler}
                   >
                     Check out
                   </button>

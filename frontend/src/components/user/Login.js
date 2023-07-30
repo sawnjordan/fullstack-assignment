@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Loader } from "../layout/Loader";
 import { MetaData } from "../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,13 @@ import { store } from "../../store";
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  const redirect = queryParams.get("redirect")
+    ? queryParams.get("redirect")
+    : "";
+
   const { loading, isAuthenticated, error, user } = useSelector(
     (state) => state.login
   );
@@ -21,7 +28,7 @@ export const Login = () => {
 
   useEffect(() => {
     if (isAuthenticated) {
-      navigate("/");
+      navigate(`/${redirect}`);
     }
 
     if (!loading && error) {

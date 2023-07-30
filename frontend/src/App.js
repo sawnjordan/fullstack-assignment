@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loadUser } from "./features/auth/loadUserSlice";
 import { store } from "./store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { UPDATE_USER_STATE } from "./features/auth/userActionTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { Profile } from "./components/user/Profile";
@@ -20,13 +20,46 @@ import { Loader } from "./components/layout/Loader";
 import { ForgotPassword } from "./components/user/ForgotPassword";
 import { NewPassword } from "./components/user/NewPassword";
 import { Cart } from "./components/cart/Cart";
+import { Shipping } from "./components/cart/Shipping";
 
 function App() {
   const dispatch = useDispatch();
-  const { loading, isAuthenticated, error, user } = useSelector(
+  const { isAuthenticated, error, user } = useSelector(
     (state) => state.loadUser
   );
+  const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     dispatch({
+  //       type: UPDATE_USER_STATE,
+  //       payload: { loading, isAuthenticated, error, user },
+  //     });
+  //   }
+  // }, [dispatch, isAuthenticated, loading, error, user]);
+
+  // useEffect(() => {
+  //   dispatch(loadUser());
+  //   // console.log(isAuthenticated, "inapp");
+  // }, [dispatch]);
+
+  // if (loading) {
+  //   return <Loader />;
+  // }
   useEffect(() => {
+    // Dispatch the loadUser action only on the first load of the app
+    if (!isAuthenticated) {
+      dispatch(loadUser());
+    }
+  }, [dispatch, isAuthenticated]);
+
+  useEffect(() => {
+    // Set loading state to false once the loadUser action is completed
+    setLoading(false);
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    // Check for authentication once the app is mounted
     if (isAuthenticated) {
       dispatch({
         type: UPDATE_USER_STATE,
@@ -34,10 +67,6 @@ function App() {
       });
     }
   }, [dispatch, isAuthenticated, loading, error, user]);
-
-  useEffect(() => {
-    dispatch(loadUser());
-  }, [dispatch]);
 
   if (loading) {
     return <Loader />;
@@ -54,6 +83,11 @@ function App() {
         <Route
           path="/me"
           element={<ProtectedRoute Component={Profile} />}
+          exact
+        />
+        <Route
+          path="/shipping"
+          element={<ProtectedRoute Component={Shipping} />}
           exact
         />
         <Route
