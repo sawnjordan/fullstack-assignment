@@ -622,3 +622,31 @@ ul.CTAs a {
 .dropdown-menu {
   min-width: 8rem;
 }
+
+.styled-checkbox:checked {
+  background-color: #fa9c23;
+}
+
+.styled-checkbox {
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border: 2px solid #fa9c23;
+  border-radius: 4px;
+  appearance: none;
+}
+
+.styled-checkbox:checked::before {
+  content: "\f00c";
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-family: FontAwesome;
+  font-size: 14px;
+  color: #fff;
+  line-height: 18px;
+}
+label[for="cash_on_delivery"] {
+  margin-left: 8px;
+  line-height: 2px;
+}

@@ -22,6 +22,7 @@ import { NewPassword } from "./components/user/NewPassword";
 import { Cart } from "./components/cart/Cart";
 import { Shipping } from "./components/cart/Shipping";
 import { ConfirmOrder } from "./components/cart/ConfirmOrder";
+import { Payment } from "./components/cart/Payment";
 
 function App() {
   const dispatch = useDispatch();
@@ -94,6 +95,11 @@ function App() {
         <Route
           path="/order/confirm"
           element={<ProtectedRoute Component={ConfirmOrder} />}
+          exact
+        />
+        <Route
+          path="/payment"
+          element={<ProtectedRoute Component={Payment} />}
           exact
         />
         <Route
