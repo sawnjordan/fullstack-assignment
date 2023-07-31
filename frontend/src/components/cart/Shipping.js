@@ -17,7 +17,7 @@ export const Shipping = () => {
       type: SAVE_SHIPPING_INFO,
       payload: { address, phoneNumber },
     });
-    navigate("/confirm");
+    navigate("/order/confirm");
   };
   return (
     <>
