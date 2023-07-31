@@ -23,6 +23,7 @@ export const ConfirmOrder = () => {
       shippingPrice,
       taxPrice,
       totalPrice,
+      paymentGateway: "COH",
     };
     sessionStorage.setItem("orderInfo", JSON.stringify(data));
     navigate("/payment");
