@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { CheckoutSteps } from "./CheckoutSteps";
-import { newOrder } from "../../features/book/orderSlice";
+import { newOrder } from "../../features/order/orderSlice";
 
 export const Payment = () => {
   const dispatch = useDispatch();

@@ -8,7 +8,9 @@ import logoutReducer from "./features/auth/logoutSlice";
 import updateReducer from "./features/user/updateSlice";
 import forgotPasswordReducer from "./features/user/forgotPasswordSlice";
 import addToCartReducer from "./features/book/cartSlice";
-import orderReducer from "./features/book/orderSlice";
+import orderReducer from "./features/order/orderSlice";
+import myOrderReducer from "./features/order/myOrderSlice";
+import orderDetailsReducer from "./features/order/orderDetailSlice";
 import initialState from "./features/initialState";
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")
@@ -30,6 +32,8 @@ export const store = configureStore({
     forgotPassword: forgotPasswordReducer,
     addToCart: addToCartReducer,
     order: orderReducer,
+    myOrders: myOrderReducer,
+    orderDetails: orderDetailsReducer,
   },
   preloadedState: {
     addToCart: {

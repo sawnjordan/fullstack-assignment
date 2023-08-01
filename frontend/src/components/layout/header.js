@@ -66,7 +66,7 @@ export const Header = () => {
               <Dropdown.Item as={Link} to="/me" className="text-black">
                 Profile
               </Dropdown.Item>
-              {user && user.role !== "admin" ? (
+              {user && (user.role !== "admin" || user.role !== "user") ? (
                 <Dropdown.Item as={Link} to="/orders/me" className="text-black">
                   Orders
                 </Dropdown.Item>
