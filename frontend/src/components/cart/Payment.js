@@ -37,6 +37,7 @@ export const Payment = () => {
         book: item.book_id,
         quantity: item.quantity,
         price: item.price,
+        title: item.title,
       };
       books.push(book);
     });

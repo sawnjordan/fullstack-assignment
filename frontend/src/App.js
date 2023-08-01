@@ -25,6 +25,7 @@ import { ConfirmOrder } from "./components/cart/ConfirmOrder";
 import { Payment } from "./components/cart/Payment";
 import { OrderSuccess } from "./components/cart/OrderSuccess";
 import { ListOrders } from "./components/orders/ListOrders";
+import { OrderDetails } from "./components/orders/OrderDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -112,6 +113,11 @@ function App() {
         <Route
           path="/orders/me"
           element={<ProtectedRoute Component={ListOrders} />}
+          exact
+        />
+        <Route
+          path="/order/:orderId"
+          element={<ProtectedRoute Component={OrderDetails} />}
           exact
         />
         <Route
