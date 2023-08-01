@@ -66,14 +66,27 @@ export const Header = () => {
               <Dropdown.Item as={Link} to="/me" className="text-black">
                 Profile
               </Dropdown.Item>
-              {user && (user.role !== "admin" || user.role !== "user") ? (
+              {user && user.role !== "admin" ? (
                 <Dropdown.Item as={Link} to="/orders/me" className="text-black">
                   Orders
                 </Dropdown.Item>
               ) : (
-                <Dropdown.Item as={Link} to="/dashboard" className="text-black">
-                  Dashboard
-                </Dropdown.Item>
+                <>
+                  <Dropdown.Item
+                    as={Link}
+                    to="/dashboard"
+                    className="text-black"
+                  >
+                    Dashboard
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    as={Link}
+                    to="/orders/me"
+                    className="text-black"
+                  >
+                    Orders
+                  </Dropdown.Item>
+                </>
               )}
               <Dropdown.Item
                 as={Link}
