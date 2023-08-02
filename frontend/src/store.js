@@ -11,6 +11,7 @@ import addToCartReducer from "./features/book/cartSlice";
 import orderReducer from "./features/order/orderSlice";
 import myOrderReducer from "./features/order/myOrderSlice";
 import orderDetailsReducer from "./features/order/orderDetailSlice";
+import adminBookReducer from "./features/book/adminBookSlice";
 import initialState from "./features/initialState";
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")
@@ -34,6 +35,7 @@ export const store = configureStore({
     order: orderReducer,
     myOrders: myOrderReducer,
     orderDetails: orderDetailsReducer,
+    adminBooks: adminBookReducer,
   },
   preloadedState: {
     addToCart: {

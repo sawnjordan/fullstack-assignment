@@ -38,7 +38,7 @@ router
   .delete(
     isUserAuthenticated,
     authServicesObj.authorizeRole("admin"),
-    bookControllerObj.updateSingleBook
+    bookControllerObj.deleteSingleBook
   );
 
 module.exports = router;

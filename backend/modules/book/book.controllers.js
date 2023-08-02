@@ -129,8 +129,8 @@ class BookController {
       const bookID = req.params.id;
       let response = await BookModel.findOneAndDelete({ _id: bookID });
       // console.log(response);
-      res.json({
-        status: 200,
+      res.status(200).json({
+        success: true,
         msg: `Book: ${response.title} deleted.`,
         response,
       });

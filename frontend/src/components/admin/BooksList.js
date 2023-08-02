@@ -4,17 +4,27 @@ import { Link, useNavigate } from "react-router-dom";
 import { MetaData } from "../layout/MetaData";
 import { toast } from "react-toastify";
 import { fetchAdminBooks } from "../../features/book/booksSlices";
+import { deleteBook } from "../../features/book/adminBookSlice";
 import { Loader } from "../layout/Loader";
 import { MDBDataTable } from "mdbreact";
 import { Sidebar } from "./Sidebar";
 
 export const BooksList = () => {
+  const CLEAR_ERRORS = "CLEAR_ERRORS";
+  const RESET_DELETE_BOOK = "RESET_DELETE_BOOK";
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { loading, error, books } = useSelector((state) => state.books);
+  const {
+    error: deleteError,
+    book,
+    isDeleted,
+    message,
+  } = useSelector((state) => state.adminBooks);
 
   useEffect(() => {
     dispatch(fetchAdminBooks());
-    if (!loading && error) {
+    if (error) {
       toast(`${error.message}`, {
         position: "top-right",
         autoClose: 1000,
@@ -23,8 +33,32 @@ export const BooksList = () => {
         pauseOnHover: true,
         draggable: true,
       });
+      dispatch({ type: CLEAR_ERRORS });
     }
-  }, [dispatch, error]);
+    if (deleteError) {
+      toast(`${error.message}`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      dispatch({ type: CLEAR_ERRORS });
+    }
+    if (isDeleted) {
+      navigate("/admin/books");
+      toast(`${message}`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      dispatch({ type: RESET_DELETE_BOOK });
+    }
+  }, [dispatch, error, isDeleted, deleteError]);
 
   const setBooks = () => {
     const data = {
@@ -71,7 +105,11 @@ export const BooksList = () => {
             >
               <i className="fa fa-pencil"></i>
             </Link>
-            <button className="btn btn-danger py-1 px-2 ml-2">
+            <button
+              className="btn btn-danger py-1 px-2 ml-2"
+              type="button"
+              onClick={() => deleteHandler(book._id)}
+            >
               <i className="fa fa-trash"></i>
             </button>
           </>
@@ -79,6 +117,9 @@ export const BooksList = () => {
       });
     });
     return data;
+  };
+  const deleteHandler = (id) => {
+    dispatch(deleteBook(id));
   };
   return (
     <>
