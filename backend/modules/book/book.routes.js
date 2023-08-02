@@ -8,6 +8,10 @@ const router = express.Router();
 //@Route /api/v1/books
 router.get("/", bookControllerObj.getAllBooks);
 
+//@desc Get All Books (Admin)
+//@Route /api/v1/books/admin
+router.get("/admin", bookControllerObj.getAllAdminBooks);
+
 //@desc Add/Create New Book
 //@Route /api/v1/book/new
 router.post(

@@ -35,6 +35,20 @@ class BookController {
     }
   };
 
+  getAllAdminBooks = async (req, res, next) => {
+    try {
+      const books = await BookModel.find();
+
+      res.json({
+        status: "success",
+        books,
+      });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
+
   createNewBook = async (req, res, next) => {
     try {
       const bookData = req.body;

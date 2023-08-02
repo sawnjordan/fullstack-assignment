@@ -9,14 +9,14 @@ export const Sidebar = () => {
           <ul className="list-unstyled components">
             <li>
               <Link to="/dashboard">
-                <i className="fa fa-tachometer-alt"></i> Dashboard
+                <i className="fa fa-tachometer"></i> Dashboard
               </Link>
             </li>
 
             <li>
               <Link
-                href="#productSubmenu"
-                data-toggle="collapse"
+                to="#productSubmenu"
+                data-bs-toggle="collapse"
                 aria-expanded="false"
                 className="dropdown-toggle"
               >

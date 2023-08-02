@@ -4,10 +4,6 @@ import axios from "axios";
 const initialState = {
   loading: false,
   books: [],
-  count: "",
-  totalBooks: "",
-  resPerPage: "",
-  error: "",
 };
 
 export const fetchBooks = createAsyncThunk(
@@ -38,6 +34,19 @@ export const fetchBooks = createAsyncThunk(
     }
   }
 );
+export const fetchAdminBooks = createAsyncThunk(
+  "book/fetchAdminBooks",
+  async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/v1/books/admin`
+      );
+      return response.data;
+    } catch (error) {
+      throw Error("Error fetching books: " + error.message);
+    }
+  }
+);
 
 export const booksSlice = createSlice({
   name: "books",
@@ -55,6 +64,19 @@ export const booksSlice = createSlice({
       state.error = "";
     });
     builder.addCase(fetchBooks.rejected, (state, action) => {
+      state.loading = false;
+      state.books = [];
+      state.error = action.error;
+    });
+    builder.addCase(fetchAdminBooks.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(fetchAdminBooks.fulfilled, (state, action) => {
+      state.loading = false;
+      state.books = action.payload.books;
+      state.error = "";
+    });
+    builder.addCase(fetchAdminBooks.rejected, (state, action) => {
       state.loading = false;
       state.books = [];
       state.error = action.error;

@@ -536,7 +536,7 @@ a[aria-expanded="true"] {
   color: #fff;
   background: #232f3e;
 }
-a[data-toggle="collapse"] {
+a[data-bs-toggle="collapse"] {
   position: relative;
 }
 .dropdown-toggle::after {

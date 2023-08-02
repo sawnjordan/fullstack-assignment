@@ -27,6 +27,7 @@ import { OrderSuccess } from "./components/cart/OrderSuccess";
 import { ListOrders } from "./components/orders/ListOrders";
 import { OrderDetails } from "./components/orders/OrderDetails";
 import { Dashboard } from "./components/admin/Dashboard";
+import { BooksList } from "./components/admin/BooksList";
 
 function App() {
   const dispatch = useDispatch();
@@ -134,6 +135,11 @@ function App() {
         <Route
           path="/dashboard"
           element={<ProtectedRoute isAdmin={false} Component={Dashboard} />}
+          exact
+        />
+        <Route
+          path="/admin/books"
+          element={<ProtectedRoute isAdmin={false} Component={BooksList} />}
           exact
         />
         <Route path="/register" element={<Register />} exact />
