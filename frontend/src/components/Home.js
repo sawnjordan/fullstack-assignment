@@ -45,8 +45,8 @@ export const Home = () => {
           <Loader />
         ) : (
           <>
-            <h1 id="products_heading">Latest Products</h1>
-            <MetaData title="Buy Best Product Online"></MetaData>
+            <h1 id="products_heading">Latest Books</h1>
+            <MetaData title="Buy Best Book Online"></MetaData>
             <section id="products" className="container mt-5">
               <div className="row">
                 {books?.map((book) => (

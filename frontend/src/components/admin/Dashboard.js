@@ -16,7 +16,7 @@ export const Dashboard = () => {
   let outOfStock = 0;
   books.forEach((book) => {
     if (book.stock === 0) {
-      outOfStock += 1;
+      outOfStock++;
     }
   });
   return (
@@ -46,7 +46,7 @@ export const Dashboard = () => {
               <div className="card text-white bg-success o-hidden h-100">
                 <div className="card-body">
                   <div className="text-center card-font-size">
-                    Products
+                    Books
                     <br /> <b>{books && books.length}</b>
                   </div>
                 </div>

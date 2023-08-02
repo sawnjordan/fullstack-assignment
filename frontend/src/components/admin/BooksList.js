@@ -82,14 +82,13 @@ export const BooksList = () => {
   };
   return (
     <>
-      <MetaData title={"All Products"} />
+      <MetaData title={"All Book"} />
       <div className="row">
         <div className="col-12 col-md-2">
           <Sidebar />
         </div>
 
         <div className="col-12 col-md-10">
-          <h1 className="my-4">All Books</h1>
           {loading ? (
             <Loader />
           ) : (

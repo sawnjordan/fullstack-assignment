@@ -1,7 +1,7 @@
 const { z } = require("zod");
 const BookModel = require("./book.model");
 class BookServices {
-  validateBannerData = (bookData) => {
+  validateBookData = (bookData) => {
     try {
       const validateSchema = z.object({
         title: z.string().nonempty({ message: "Title is required." }).max(100, {
@@ -23,7 +23,7 @@ class BookServices {
           .refine((array) => array.length > 0, {
             message: "The should be at least one author",
           }),
-        isbn: z.number().nullable(),
+        isbn: z.string().nullable(),
         stock: z.number().nonnegative({ message: "Value must be positive." }),
       });
       return validateSchema.parse(bookData);

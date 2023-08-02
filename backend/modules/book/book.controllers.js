@@ -37,7 +37,7 @@ class BookController {
 
   getAllAdminBooks = async (req, res, next) => {
     try {
-      const books = await BookModel.find();
+      const books = await BookModel.find().sort({ _id: "desc" });
 
       res.json({
         status: "success",
@@ -53,10 +53,11 @@ class BookController {
     try {
       const bookData = req.body;
 
-      const validData = bookServiceObj.validateBannerData(bookData);
+      const validData = bookServiceObj.validateBookData(bookData);
       // console.log(validData);
       req.body.user = req.user.id;
       const { title, price, author, isbn, stock, user } = req.body;
+
       const newBook = await new BookModel({
         title,
         price,
@@ -66,7 +67,7 @@ class BookController {
         user,
       }).save();
 
-      res.status(201).json({ status: 201, response: newBook });
+      res.status(201).json({ success: true, response: newBook });
     } catch (err) {
       next(err);
     }
