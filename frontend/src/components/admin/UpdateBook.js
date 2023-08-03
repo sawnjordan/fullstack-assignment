@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { MetaData } from "../layout/MetaData";
 import { toast } from "react-toastify";
-import { createNewBook } from "../../features/book/booksSlices";
+import { updateBook } from "../../features/book/adminBookSlice";
+import { fetchBook } from "../../features/book/bookSlices";
 import { Sidebar } from "./Sidebar";
 
-export const NewBook = () => {
-  const RESET_NEW_BOOK = "RESET_NEW_BOOK";
+export const UpdateBook = () => {
+  const RESET_UPDATE_BOOK = "RESET_UPDATE_BOOK";
   const CLEAR_ERRORS = "CLEAR_ERRORS";
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
@@ -16,11 +17,27 @@ export const NewBook = () => {
   const [authors, setAuthors] = useState([""]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error, book, success } = useSelector((state) => state.books);
-  const { user } = useSelector((state) => state.loadUser);
+  const {
+    loading,
+    error: updateError,
+    isUpdated,
+    message,
+  } = useSelector((state) => state.adminBooks);
+  const { error, book } = useSelector((state) => state.book);
+  const bookId = useParams().id;
 
   useEffect(() => {
-    if (!loading && error) {
+    if (book && bookId !== book._id) {
+      dispatch(fetchBook(bookId));
+    } else {
+      setTitle(book.title);
+      setPrice(book.price);
+      setStock(book.stock);
+      setIsbn(book.isbn);
+      setAuthors(book.author);
+    }
+
+    if (!loading && updateError) {
       const errorMessagesArray = error.message
         .split(",")
         .map((message) => message.trim());
@@ -37,10 +54,8 @@ export const NewBook = () => {
       });
       dispatch({ type: CLEAR_ERRORS });
     }
-
-    if (success) {
-      navigate("/admin/books");
-      toast(`Book created successfully.`, {
+    if (error) {
+      toast(`${error.message}`, {
         position: "top-right",
         autoClose: 1000,
         hideProgressBar: false,
@@ -48,8 +63,23 @@ export const NewBook = () => {
         pauseOnHover: true,
         draggable: true,
       });
+      dispatch({ type: CLEAR_ERRORS });
     }
-  }, [dispatch, error, success]);
+
+    if (isUpdated) {
+      navigate("/admin/books");
+      toast(`Book Updated successfully.`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      dispatch({ type: RESET_UPDATE_BOOK });
+      dispatch(fetchBook(bookId));
+    }
+  }, [dispatch, error, isUpdated, bookId, updateError, book]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -63,12 +93,8 @@ export const NewBook = () => {
       author: authors,
       isbn,
       stock: parseInt(stock),
-      user: user._id,
     };
-    dispatch(createNewBook(bookData));
-    dispatch({
-      type: RESET_NEW_BOOK,
-    });
+    dispatch(updateBook({ id: bookId, bookData }));
   };
   const handleAuthorChange = (index, value) => {
     const updatedAuthors = [...authors];
@@ -80,9 +106,10 @@ export const NewBook = () => {
       setAuthors([...authors, ""]);
     }
   };
+
   return (
     <>
-      <MetaData title={"New Book"} />
+      <MetaData title={"Update Book"} />
       <div className="row">
         <div className="col-12 col-md-2">
           <Sidebar />
@@ -91,7 +118,7 @@ export const NewBook = () => {
         <div className="col-12 col-md-10">
           <div className="wrapper my-5">
             <form className="shadow-lg" onSubmit={submitHandler}>
-              <h1 className="mb-4">New Book</h1>
+              <h1 className="mb-4">Update Book</h1>
 
               <div className="form-group">
                 <label htmlFor="title_field">Title</label>
@@ -165,7 +192,7 @@ export const NewBook = () => {
                 type="submit"
                 className="btn btn-block py-3"
               >
-                CREATE
+                UPDATE
               </button>
             </form>
           </div>

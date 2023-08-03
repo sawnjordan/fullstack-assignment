@@ -111,10 +111,8 @@ class BookController {
         runValidators: true,
       });
 
-      console.log(updatedBook);
-
-      res.json({
-        status: 200,
+      res.status(200).json({
+        success: true,
         msg: `Book Updated with Id: ${bookID}`,
         response: book,
       });
