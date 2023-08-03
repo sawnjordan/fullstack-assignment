@@ -10,6 +10,7 @@ import forgotPasswordReducer from "./features/user/forgotPasswordSlice";
 import addToCartReducer from "./features/book/cartSlice";
 import orderReducer from "./features/order/orderSlice";
 import myOrderReducer from "./features/order/myOrderSlice";
+import allOrdersReducer from "./features/order/allOrdersSlice";
 import orderDetailsReducer from "./features/order/orderDetailSlice";
 import adminBookReducer from "./features/book/adminBookSlice";
 import initialState from "./features/initialState";
@@ -35,6 +36,7 @@ export const store = configureStore({
     order: orderReducer,
     myOrders: myOrderReducer,
     orderDetails: orderDetailsReducer,
+    allOrders: allOrdersReducer,
     adminBooks: adminBookReducer,
   },
   preloadedState: {

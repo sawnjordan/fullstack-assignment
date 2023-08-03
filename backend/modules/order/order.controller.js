@@ -64,11 +64,11 @@ class OrderController {
   getAllOrder = async (req, res, next) => {
     try {
       const orders = await OrderModel.find();
-      let totalAmout = 0;
+      let totalAmount = 0;
       orders.map((item) => {
-        totalAmout += item.totalPrice;
+        totalAmount += item.totalPrice;
       });
-      res.status(200).json({ status: "success", response: orders, totalAmout });
+      res.status(200).json({ success: true, response: orders, totalAmount });
     } catch (error) {
       console.log(error);
       next(error);

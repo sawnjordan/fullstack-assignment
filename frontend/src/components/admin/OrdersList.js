@@ -3,27 +3,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { MetaData } from "../layout/MetaData";
 import { toast } from "react-toastify";
-import { fetchAdminBooks } from "../../features/book/booksSlices";
-import { deleteBook } from "../../features/book/adminBookSlice";
+import { allOrders } from "../../features/order/allOrdersSlice";
 import { Loader } from "../layout/Loader";
 import { MDBDataTable } from "mdbreact";
 import { Sidebar } from "./Sidebar";
 
-export const BooksList = () => {
+export const OrdersList = () => {
   const CLEAR_ERRORS = "CLEAR_ERRORS";
-  const RESET_DELETE_BOOK = "RESET_DELETE_BOOK";
+  //   const RESET_DELETE_BOOK = "RESET_DELETE_BOOK";
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { loading, error, books } = useSelector((state) => state.books);
-  const {
-    error: deleteError,
-    book,
-    isDeleted,
-    message,
-  } = useSelector((state) => state.adminBooks);
+  const { loading, error, orders } = useSelector((state) => state.allOrders);
 
   useEffect(() => {
-    dispatch(fetchAdminBooks());
+    dispatch(allOrders());
     if (error) {
       toast(`${error.message}`, {
         position: "top-right",
@@ -35,52 +28,52 @@ export const BooksList = () => {
       });
       dispatch({ type: CLEAR_ERRORS });
     }
-    if (deleteError) {
-      toast(`${error.message}`, {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-      dispatch({ type: CLEAR_ERRORS });
-    }
-    if (isDeleted) {
-      navigate("/admin/books");
-      toast(`${message}`, {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
-      dispatch({ type: RESET_DELETE_BOOK });
-    }
-  }, [dispatch, error, isDeleted, deleteError]);
+    // if (deleteError) {
+    //   toast(`${error.message}`, {
+    //     position: "top-right",
+    //     autoClose: 1000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //   });
+    //   dispatch({ type: CLEAR_ERRORS });
+    // }
+    // if (isDeleted) {
+    //   navigate("/admin/orders");
+    //   toast(`${message}`, {
+    //     position: "top-right",
+    //     autoClose: 1000,
+    //     hideProgressBar: false,
+    //     closeOnClick: true,
+    //     pauseOnHover: true,
+    //     draggable: true,
+    //   });
+    //   dispatch({ type: RESET_DELETE_BOOK });
+    // }
+  }, [dispatch, error]);
 
-  const setBooks = () => {
+  const setOrders = () => {
     const data = {
       columns: [
         {
-          label: "ID:",
+          label: "Order ID:",
           field: "id",
           sort: "asc",
         },
         {
-          label: "Name",
-          field: "name",
+          label: "Num of Items",
+          field: "numOfItems",
           sort: "asc",
         },
         {
-          label: "Price",
-          field: "price",
+          label: "Amount",
+          field: "amount",
           sort: "asc",
         },
         {
-          label: "Stock",
-          field: "stock",
+          label: "Status",
+          field: "status",
           sort: "asc",
         },
         {
@@ -91,25 +84,27 @@ export const BooksList = () => {
       rows: [],
     };
 
-    books.forEach((book) => {
+    orders.forEach((order) => {
       data.rows.push({
-        id: book._id,
-        name: book.title,
-        price: `${book.price}`,
-        stock: book.stock,
+        id: order._id,
+        numOfItems: order.books.length,
+        amount: order.totalPrice,
+        status:
+          order?.orderStatus &&
+          String(order.orderStatus).includes("Processing") ? (
+            <p style={{ color: "red" }}>{order.orderStatus}</p>
+          ) : (
+            <p style={{ color: "green" }}>{order.orderStatus}</p>
+          ),
         actions: (
           <>
             <Link
-              to={`/admin/book/${book._id}`}
+              to={`/admin/order/${order._id}`}
               className="btn btn-primary py-1 px-2"
             >
-              <i className="fa fa-pencil"></i>
+              <i className="fa fa-eye"></i>
             </Link>
-            <button
-              className="btn btn-danger py-1 px-2 ml-2"
-              type="button"
-              onClick={() => deleteHandler(book._id)}
-            >
+            <button className="btn btn-danger py-1 px-2 ml-2" type="button">
               <i className="fa fa-trash"></i>
             </button>
           </>
@@ -118,12 +113,9 @@ export const BooksList = () => {
     });
     return data;
   };
-  const deleteHandler = (id) => {
-    dispatch(deleteBook(id));
-  };
   return (
     <>
-      <MetaData title={"All Book"} />
+      <MetaData title={"All Orders"} />
       <div className="row">
         <div className="col-12 col-md-2">
           <Sidebar />
@@ -135,7 +127,7 @@ export const BooksList = () => {
           ) : (
             <>
               <MDBDataTable
-                data={setBooks()}
+                data={setOrders()}
                 className="px-3"
                 bordered
                 striped
