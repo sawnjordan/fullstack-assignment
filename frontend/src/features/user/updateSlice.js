@@ -31,6 +31,24 @@ export const updateUser = createAsyncThunk("auth/update", async (userData) => {
     }
   }
 });
+export const adminUpdateUser = createAsyncThunk(
+  "auth/adminUpdate",
+  async ({ userId, userData }) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/v1/auth/user/${userId}`,
+        userData,
+        config
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.msg) {
+        const err = error.response.data.msg;
+        throw Error(err);
+      }
+    }
+  }
+);
 
 export const updateUserPassword = createAsyncThunk(
   "auth/updatePassword",
@@ -65,6 +83,17 @@ export const updateSlice = createSlice({
       state.isUpdated = action.payload.status;
     });
     builder.addCase(updateUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.error;
+    });
+    builder.addCase(adminUpdateUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(adminUpdateUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.isUpdated = action.payload.status;
+    });
+    builder.addCase(adminUpdateUser.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error;
     });

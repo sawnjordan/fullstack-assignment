@@ -33,6 +33,7 @@ import { UpdateBook } from "./components/admin/UpdateBook";
 import { OrdersList } from "./components/admin/OrdersList";
 import { ProcessOrder } from "./components/admin/ProcessOrder";
 import { UsersList } from "./components/admin/UsersList";
+import { UpdateUser } from "./components/admin/UpdateUser";
 
 function App() {
   const dispatch = useDispatch();
@@ -170,6 +171,11 @@ function App() {
         <Route
           path="/admin/users"
           element={<ProtectedRoute isAdmin={false} Component={UsersList} />}
+          exact
+        />
+        <Route
+          path="/admin/user/:id"
+          element={<ProtectedRoute isAdmin={false} Component={UpdateUser} />}
           exact
         />
         <Route path="/register" element={<Register />} exact />

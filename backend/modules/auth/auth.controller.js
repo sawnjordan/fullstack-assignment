@@ -120,8 +120,8 @@ class AuthController {
           response: `User not found with ID: ${userId}`,
         });
       } else {
-        console.log(user);
-        res.status(200).json({ status: "success", response: user });
+        // console.log(user);
+        res.status(200).json({ success: true, response: user });
       }
     } catch (error) {
       console.log(error);
@@ -276,7 +276,8 @@ class AuthController {
   updateUser = async (req, res, next) => {
     try {
       const { name, email, role } = req.body;
-      const userId = req.params;
+      const userId = req.params.id;
+      console.log(userId);
       const newUserData = {
         name,
         email,
