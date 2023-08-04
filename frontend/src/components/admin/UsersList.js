@@ -93,7 +93,7 @@ export const UsersList = () => {
         actions: (
           <>
             <Link
-              to={`/admin/order/${user._id}`}
+              to={`/admin/user/${user._id}`}
               className="btn btn-primary py-1 px-2"
             >
               <i className="fa fa-pencil"></i>

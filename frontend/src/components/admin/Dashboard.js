@@ -5,17 +5,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { Loader } from "../layout/Loader";
 import { fetchAdminBooks } from "../../features/book/booksSlices";
 import { allOrders } from "../../features/order/allOrdersSlice";
+import { allUsers } from "../../features/user/allUsersSlice";
 import { Sidebar } from "./Sidebar";
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
   const { books } = useSelector((state) => state.books);
+  const { users } = useSelector((state) => state.allUsers);
   const { orders, totalAmount, loading } = useSelector(
     (state) => state.allOrders
   );
   useEffect(() => {
     dispatch(fetchAdminBooks());
     dispatch(allOrders());
+    dispatch(allUsers());
   }, [dispatch]);
 
   let outOfStock = 0;
@@ -97,12 +100,12 @@ export const Dashboard = () => {
                     <div className="card-body">
                       <div className="text-center card-font-size">
                         Users
-                        <br /> <b>45</b>
+                        <br /> <b>{users.length}</b>
                       </div>
                     </div>
                     <Link
                       className="card-footer text-white clearfix small z-1"
-                      href="/admin/users"
+                      to="/admin/users"
                     >
                       <span className="float-left">View Details</span>
                       <span className="float-right">
