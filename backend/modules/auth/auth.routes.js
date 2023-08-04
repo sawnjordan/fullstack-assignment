@@ -32,6 +32,13 @@ router.get(
   authControllerObj.getAllUser
 );
 
+router.put(
+  "/user/:id",
+  isUserAuthenticated,
+  authServicesObj.authorizeRole("admin"),
+  authControllerObj.updateUser
+);
+
 router.get(
   "/users/:id",
   isUserAuthenticated,

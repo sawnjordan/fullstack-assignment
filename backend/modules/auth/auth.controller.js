@@ -273,6 +273,25 @@ class AuthController {
       next(error);
     }
   };
+  updateUser = async (req, res, next) => {
+    try {
+      const { name, email, role } = req.body;
+      const userId = req.params;
+      const newUserData = {
+        name,
+        email,
+        role,
+      };
+      const updatedUser = await authServicesObj.updateUser(newUserData, userId);
+      res.status(200).json({
+        status: true,
+        response: updatedUser,
+      });
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  };
 }
 
 const authControllerObj = new AuthController();
