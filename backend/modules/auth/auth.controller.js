@@ -102,7 +102,7 @@ class AuthController {
           .status(404)
           .json({ status: "Not Found", response: "No any users found." });
       } else {
-        res.status(200).json({ status: "success", response: users });
+        res.status(200).json({ success: true, response: users });
       }
     } catch (error) {
       console.log(error);

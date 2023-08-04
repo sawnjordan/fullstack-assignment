@@ -7,6 +7,7 @@ import loadUserReducer from "./features/auth/loadUserSlice";
 import logoutReducer from "./features/auth/logoutSlice";
 import updateReducer from "./features/user/updateSlice";
 import forgotPasswordReducer from "./features/user/forgotPasswordSlice";
+import allUsersReducer from "./features/user/allUsersSlice";
 import addToCartReducer from "./features/book/cartSlice";
 import newOrderReducer from "./features/order/newOrderSlice";
 import myOrderReducer from "./features/order/myOrderSlice";
@@ -32,6 +33,7 @@ export const store = configureStore({
     loadUser: loadUserReducer,
     logoutUser: logoutReducer,
     updateUser: updateReducer,
+    allUsers: allUsersReducer,
     forgotPassword: forgotPasswordReducer,
     addToCart: addToCartReducer,
     newOrder: newOrderReducer,
