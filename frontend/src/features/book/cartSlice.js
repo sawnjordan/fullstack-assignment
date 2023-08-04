@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, createAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const SAVE_SHIPPING_INFO = "SAVE_SHIPPING_INFO";
@@ -6,6 +6,8 @@ const initialState = {
   cartItems: [],
   shippingInfo: {},
 };
+
+const RESET_CART = "RESET_CART";
 export const addItemsToCart = createAsyncThunk(
   "book/addToCart",
   async ({ id, quantity }) => {
@@ -90,7 +92,14 @@ export const addToCartSlice = createSlice({
       state.shippingInfo = action.payload;
       localStorage.setItem("shippingInfo", JSON.stringify(state.shippingInfo));
     });
+    builder.addCase(RESET_CART, (state) => {
+      state.cartItems = [];
+      state.shippingInfo = {};
+      localStorage.removeItem("cartItems");
+      localStorage.removeItem("shippingInfo");
+    });
   },
 });
+export const resetCart = createAction(RESET_CART);
 
 export default addToCartSlice.reducer;

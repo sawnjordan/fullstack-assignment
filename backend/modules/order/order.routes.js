@@ -26,7 +26,7 @@ router.get(
   orderControllerObj.getSingleOrder
 );
 
-router.post(
+router.put(
   "/admin/order/:id",
   isUserAuthenticated,
   authServicesObj.authorizeRole("admin"),

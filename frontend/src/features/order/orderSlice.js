@@ -2,53 +2,68 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {};
-const config = {
+const postConfig = {
   headers: {
     "Content-Type": "application/json",
   },
   withCredentials: true,
 };
+const getConfig = {
+  withCredentials: true,
+};
+// const RESET_DELETE_BOOK = "RESET_DELETE_BOOK";
 
-export const newOrder = createAsyncThunk("order/new", async (order) => {
-  try {
-    // const response = await axios.post(`http://localhost:5000/api/v1/order/new`);
-    const response = await axios.post(
-      "http://localhost:5000/api/v1/order/new",
-      order,
-      config
-    );
-    return response.data;
-  } catch (error) {
-    if (error.response && error.response.data && error.response.data.response) {
-      // Extract the error message from the response and throw a new error with it
-      throw new Error(error.response.data.response);
-    } else {
-      // If there's no specific error message in the response, re-throw the original error
-      throw error;
+const CLEAR_ERRORS = "CLEAR_ERRORS";
+const RESET_UPDATE_ORDER = "RESET_UPDATE_ORDER";
+
+export const updateOrder = createAsyncThunk(
+  "book/updateOrder",
+  async ({ id, orderData }) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:5000/api/v1/admin/order/${id}`,
+        orderData,
+        postConfig
+      );
+      return response.data;
+    } catch (error) {
+      if (error.response && error.response.data && error.response.data.msg) {
+        const err = error.response.data.msg;
+        const errorValues = Object.values(err);
+        const errMsg = errorValues.join(", ");
+        throw Error(errMsg);
+      }
     }
   }
-});
+);
 
-export const orderSlice = createSlice({
-  name: "newOrder",
+export const adminOrderSlice = createSlice({
+  name: "adminOrder",
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(newOrder.pending, (state) => {
+    builder.addCase(updateOrder.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(newOrder.fulfilled, (state, action) => {
+    builder.addCase(updateOrder.fulfilled, (state, action) => {
       state.loading = false;
-      state.order = action.payload.response;
+      state.isUpdated = action.payload.success;
       state.error = "";
     });
-    builder.addCase(newOrder.rejected, (state, action) => {
+    builder.addCase(updateOrder.rejected, (state, action) => {
       state.loading = false;
       state.error = action.error;
+    });
+    builder.addCase(RESET_UPDATE_ORDER, (state) => {
+      state.loading = false;
+      state.isUpdated = false;
+    });
+    builder.addCase(CLEAR_ERRORS, (state) => {
+      state.error = null;
     });
   },
 });
 
 // Action creators are generated for each case reducer function
-// export const {} = bookSlice.actions;
+// export const {} = adminOrderSlice.actions;
 
-export default orderSlice.reducer;
+export default adminOrderSlice.reducer;

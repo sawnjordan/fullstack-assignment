@@ -8,10 +8,11 @@ import logoutReducer from "./features/auth/logoutSlice";
 import updateReducer from "./features/user/updateSlice";
 import forgotPasswordReducer from "./features/user/forgotPasswordSlice";
 import addToCartReducer from "./features/book/cartSlice";
-import orderReducer from "./features/order/orderSlice";
+import newOrderReducer from "./features/order/newOrderSlice";
 import myOrderReducer from "./features/order/myOrderSlice";
 import allOrdersReducer from "./features/order/allOrdersSlice";
 import orderDetailsReducer from "./features/order/orderDetailSlice";
+import updateOrderReducer from "./features/order/orderSlice";
 import adminBookReducer from "./features/book/adminBookSlice";
 import initialState from "./features/initialState";
 
@@ -33,10 +34,11 @@ export const store = configureStore({
     updateUser: updateReducer,
     forgotPassword: forgotPasswordReducer,
     addToCart: addToCartReducer,
-    order: orderReducer,
+    newOrder: newOrderReducer,
     myOrders: myOrderReducer,
     orderDetails: orderDetailsReducer,
     allOrders: allOrdersReducer,
+    updateOrder: updateOrderReducer,
     adminBooks: adminBookReducer,
   },
   preloadedState: {

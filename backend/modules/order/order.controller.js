@@ -81,17 +81,18 @@ class OrderController {
       const order = await OrderModel.findById(orderId);
       if (order.orderStatus === "Delivered") {
         return res.statu(400).json({
-          status: "success",
+          success: true,
           response: "You have already delivered this order.",
         });
       }
-      console.log(order);
+      // console.log(order);
       order.books.map(async (item) => {
         await orderServiceObj.updateStock(item.book, item.quantity);
       });
       order.orderStatus = req.body.status;
       order.deliveredAt = Date.now();
       await order.save({ validateBeforeSave: false });
+      res.status(200).json({ success: true });
     } catch (error) {
       console.log(error);
       next(error);

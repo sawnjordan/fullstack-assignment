@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { MetaData } from "../layout/MetaData";
 import { Link, useNavigate } from "react-router-dom";
+import { resetCart } from "../../features/book/cartSlice";
 
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { CheckoutSteps } from "./CheckoutSteps";
-import { newOrder } from "../../features/order/orderSlice";
+import { newOrder } from "../../features/order/newOrderSlice";
 
 export const Payment = () => {
   const dispatch = useDispatch();
@@ -50,6 +51,7 @@ export const Payment = () => {
     // console.log(books);
     // console.log(order);
     dispatch(newOrder(order));
+    dispatch(resetCart());
     navigate("/order/success");
     // }
   };

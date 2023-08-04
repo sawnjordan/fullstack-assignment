@@ -10,8 +10,6 @@ export const OrderDetails = () => {
   const { orderId } = useParams();
   const dispatch = useDispatch();
   const { loading, error, order } = useSelector((state) => state.orderDetails);
-  const { paymentInfo, user, books, totalPrice, shippingAddress, orderStatus } =
-    order[0];
 
   useEffect(() => {
     dispatch(orderDetails(orderId));
@@ -26,6 +24,12 @@ export const OrderDetails = () => {
       });
     }
   }, [dispatch, error, orderId]);
+  if (!order || order.length === 0) {
+    return <Loader />;
+  }
+
+  const { paymentInfo, user, books, totalPrice, shippingAddress, orderStatus } =
+    order[0];
   return (
     <>
       <MetaData title={"Order Details"} />
@@ -61,7 +65,7 @@ export const OrderDetails = () => {
                 </p>
 
                 <h4 className="my-4">Order Status:</h4>
-                <p className="greenColor">
+                <div className="greenColor">
                   <b>
                     {orderStatus &&
                     String(orderStatus).includes("Processing") ? (
@@ -70,12 +74,12 @@ export const OrderDetails = () => {
                       <p style={{ color: "green" }}>{orderStatus}</p>
                     )}
                   </b>
-                </p>
+                </div>
 
                 <h4 className="my-4">Order Items:</h4>
 
                 {books.map((item) => (
-                  <>
+                  <div key={item.book}>
                     <hr />
                     <div className="cart-item my-1">
                       <div className="row my-5">
@@ -102,7 +106,7 @@ export const OrderDetails = () => {
                       </div>
                     </div>
                     <hr />
-                  </>
+                  </div>
                 ))}
               </div>
             </div>

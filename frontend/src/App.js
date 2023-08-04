@@ -31,6 +31,7 @@ import { BooksList } from "./components/admin/BooksList";
 import { NewBook } from "./components/admin/NewBook";
 import { UpdateBook } from "./components/admin/UpdateBook";
 import { OrdersList } from "./components/admin/OrdersList";
+import { ProcessOrder } from "./components/admin/ProcessOrder";
 
 function App() {
   const dispatch = useDispatch();
@@ -153,6 +154,11 @@ function App() {
         <Route
           path="/admin/orders"
           element={<ProtectedRoute isAdmin={false} Component={OrdersList} />}
+          exact
+        />
+        <Route
+          path="/admin/order/:id"
+          element={<ProtectedRoute isAdmin={false} Component={ProcessOrder} />}
           exact
         />
         <Route
