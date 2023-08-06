@@ -5,20 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { resetPassword } from "../../features/user/forgotPasswordSlice";
 import { toast } from "react-toastify";
-import { store } from "../../store";
-import { UPDATE_USER_STATE } from "../../features/auth/userActionTypes";
 import { Loader } from "../layout/Loader";
 
 export const NewPassword = () => {
   const { token } = useParams();
 
-  const UPDATE_PROFILE_RESET = "UPDATE_PROFILE_RESET";
   const CLEAR_ERRORS = "CLEAR_ERRORS";
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConformPassword] = useState("");
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.loadUser);
 
   const { error, message, loading } = useSelector(
     (state) => state.forgotPassword

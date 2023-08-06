@@ -23,9 +23,13 @@ export const Profile = () => {
           <h2 className="mt-5 ml-5">My Profile({user.role})</h2>
           <div className="row justify-content-around mt-5 user-info">
             <div className="col-12 col-md-3">
-              {/* <figure className="avatar avatar-profile">
-                <img className="rounded-circle img-fluid" src="" alt="" />
-              </figure> */}
+              <figure className="avatar avatar-profile">
+                <img
+                  className="rounded-circle img-fluid"
+                  src="/images/avatar.jpg"
+                  alt=""
+                />
+              </figure>
               <Link
                 to="/me/update"
                 id="edit_profile"

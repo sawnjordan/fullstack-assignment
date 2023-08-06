@@ -5,8 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { forgotPassword } from "../../features/user/forgotPasswordSlice";
 import { toast } from "react-toastify";
-import { store } from "../../store";
-import { UPDATE_USER_STATE } from "../../features/auth/userActionTypes";
 
 export const ForgotPassword = () => {
   const CLEAR_ERRORS = "CLEAR_ERRORS";

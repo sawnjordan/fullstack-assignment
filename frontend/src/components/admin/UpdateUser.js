@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { MetaData } from "../layout/MetaData";
 import { useDispatch, useSelector } from "react-redux";
 

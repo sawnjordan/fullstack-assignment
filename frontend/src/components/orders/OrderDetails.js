@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { MetaData } from "../layout/MetaData";
 import { toast } from "react-toastify";
 import { orderDetails } from "../../features/order/orderDetailSlice";
@@ -85,7 +85,7 @@ export const OrderDetails = () => {
                       <div className="row my-5">
                         <div className="col-4 col-lg-2">
                           <img
-                            src="https://images.penguinrandomhouse.com/cover/9780147512543"
+                            src="/images/book.jpg"
                             alt="Laptop"
                             height="45"
                             width="65"

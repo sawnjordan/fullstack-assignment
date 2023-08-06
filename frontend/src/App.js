@@ -42,23 +42,6 @@ function App() {
   );
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     dispatch({
-  //       type: UPDATE_USER_STATE,
-  //       payload: { loading, isAuthenticated, error, user },
-  //     });
-  //   }
-  // }, [dispatch, isAuthenticated, loading, error, user]);
-
-  // useEffect(() => {
-  //   dispatch(loadUser());
-  //   // console.log(isAuthenticated, "inapp");
-  // }, [dispatch]);
-
-  // if (loading) {
-  //   return <Loader />;
-  // }
   useEffect(() => {
     // Dispatch the loadUser action only on the first load of the app
     if (!isAuthenticated) {

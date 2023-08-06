@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { MetaData } from "../layout/MetaData";
@@ -58,7 +58,7 @@ export const ConfirmOrder = () => {
                   <div className="row">
                     <div className="col-4 col-lg-2">
                       <img
-                        src="https://images.penguinrandomhouse.com/cover/9780147512543"
+                        src="/images/book.jpg"
                         alt="Laptop"
                         height="45"
                         width="65"
@@ -87,11 +87,11 @@ export const ConfirmOrder = () => {
               <h4>Order Summary</h4>
               <hr />
               <p>
-                Subtotal:{" "}
+                Subtotal:
                 <span className="order-summary-values">${itemPrice}</span>
               </p>
               <p>
-                Shipping:{" "}
+                Shipping:
                 <span className="order-summary-values">${shippingPrice}</span>
               </p>
               <p>
@@ -101,7 +101,7 @@ export const ConfirmOrder = () => {
               <hr />
 
               <p>
-                Total:{" "}
+                Total:
                 <span className="order-summary-values">${totalPrice}</span>
               </p>
 

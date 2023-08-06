@@ -6,10 +6,7 @@ export const Book = ({ book }) => {
     <>
       <div key={book._id} className="col-sm-12 col-md-6 col-lg-3 my-3">
         <div className="card p-3 rounded">
-          <img
-            className="card-img-top mx-auto"
-            src="https://images.penguinrandomhouse.com/cover/9780147512543"
-          />
+          <img className="card-img-top mx-auto" src="/images/book.jpg" />
           <div className="card-body d-flex flex-column">
             <h5 className="card-title">
               <Link to={`/books/${book._id}`}>{book.title}</Link>

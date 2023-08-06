@@ -10,9 +10,7 @@ import { Sidebar } from "./Sidebar";
 
 export const UsersList = () => {
   const CLEAR_ERRORS = "CLEAR_ERRORS";
-  //   const RESET_DELETE_BOOK = "RESET_DELETE_BOOK";
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { loading, error, users } = useSelector((state) => state.allUsers);
 
   useEffect(() => {

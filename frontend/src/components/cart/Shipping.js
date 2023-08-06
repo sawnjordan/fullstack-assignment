@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { MetaData } from "../layout/MetaData";
-import { toast } from "react-toastify";
 import { CheckoutSteps } from "./CheckoutSteps";
 export const Shipping = () => {
   const navigate = useNavigate();

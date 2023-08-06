@@ -14,7 +14,6 @@ export const Register = () => {
   const { loading, user, isAuthenticated, error } = useSelector(
     (state) => state.register
   );
-  const payload = useSelector((state) => state.register);
   const [newUser, setNewUser] = useState({
     name: "",
     email: "",

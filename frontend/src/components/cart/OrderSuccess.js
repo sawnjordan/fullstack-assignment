@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MetaData } from "../layout/MetaData";
 
 export const OrderSuccess = () => {
@@ -10,7 +10,7 @@ export const OrderSuccess = () => {
           <div className="col-6 mt-5 text-center">
             <img
               className="my-5 img-fluid d-block mx-auto"
-              src="https://freepngimg.com/thumb/success/6-2-success-png-image.png"
+              src="/images/success.png"
               alt="Order Success"
               width="200"
               height="200"

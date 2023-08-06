@@ -81,8 +81,8 @@ export const Cart = () => {
                     <div className="row">
                       <div className="col-4 col-lg-3">
                         <img
-                          src="https://images.penguinrandomhouse.com/cover/9780147512543"
-                          alt="Laptop"
+                          src="/images/book.jpg"
+                          alt="Book"
                           height="90"
                           width="115"
                         />
@@ -145,13 +145,13 @@ export const Cart = () => {
                   <h4>Order Summary</h4>
                   <hr />
                   <p>
-                    Subtotal:{" "}
+                    Total Quantity:
                     <span className="order-summary-values">
                       {calculateTotalQuantity()} (Items)
                     </span>
                   </p>
                   <p>
-                    Est. total:{" "}
+                    Est. Total Price:
                     <span className="order-summary-values">
                       ${calculateTotalPrice()}
                     </span>

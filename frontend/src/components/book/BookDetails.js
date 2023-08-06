@@ -62,12 +62,7 @@ export const BookDetails = () => {
           <MetaData title={book.title} />
           <div className="row f-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
-              <img
-                src="https://theurbanwriters.com/cdn/shop/files/Overthinking_kindle_1.jpg?v=1644324348"
-                alt="sdf"
-                height="500"
-                width="500"
-              />
+              <img src="/images/book.jpg" alt="A Book Image" />
             </div>
 
             <div className="col-12 col-lg-5 mt-5">
