@@ -4,16 +4,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { MetaData } from "../layout/MetaData";
 import { toast } from "react-toastify";
 import { allOrders } from "../../features/order/allOrdersSlice";
+import { deleteOrder } from "../../features/order/orderSlice";
 import { Loader } from "../layout/Loader";
 import { MDBDataTable } from "mdbreact";
 import { Sidebar } from "./Sidebar";
 
 export const OrdersList = () => {
   const CLEAR_ERRORS = "CLEAR_ERRORS";
-  //   const RESET_DELETE_BOOK = "RESET_DELETE_BOOK";
+  const RESET_DELETE_ORDER = "RESET_DELETE_ORDER";
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error, orders } = useSelector((state) => state.allOrders);
+  const {
+    error: deleteError,
+    isDeleted,
+    message,
+  } = useSelector((state) => state.updateOrder);
 
   useEffect(() => {
     dispatch(allOrders());
@@ -28,30 +34,30 @@ export const OrdersList = () => {
       });
       dispatch({ type: CLEAR_ERRORS });
     }
-    // if (deleteError) {
-    //   toast(`${error.message}`, {
-    //     position: "top-right",
-    //     autoClose: 1000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //   });
-    //   dispatch({ type: CLEAR_ERRORS });
-    // }
-    // if (isDeleted) {
-    //   navigate("/admin/orders");
-    //   toast(`${message}`, {
-    //     position: "top-right",
-    //     autoClose: 1000,
-    //     hideProgressBar: false,
-    //     closeOnClick: true,
-    //     pauseOnHover: true,
-    //     draggable: true,
-    //   });
-    //   dispatch({ type: RESET_DELETE_BOOK });
-    // }
-  }, [dispatch, error]);
+    if (deleteError) {
+      toast(`${error.message}`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      dispatch({ type: CLEAR_ERRORS });
+    }
+    if (isDeleted) {
+      navigate("/admin/orders");
+      toast(`${message}`, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      dispatch({ type: RESET_DELETE_ORDER });
+    }
+  }, [dispatch, error, isDeleted, message]);
 
   const setOrders = () => {
     const data = {
@@ -104,7 +110,11 @@ export const OrdersList = () => {
             >
               <i className="fa fa-eye"></i>
             </Link>
-            <button className="btn btn-danger py-1 px-2 ml-2" type="button">
+            <button
+              className="btn btn-danger py-1 px-2 ml-2"
+              type="button"
+              onClick={() => handleDeleteOrder(order._id)}
+            >
               <i className="fa fa-trash"></i>
             </button>
           </>
@@ -112,6 +122,10 @@ export const OrdersList = () => {
       });
     });
     return data;
+  };
+
+  const handleDeleteOrder = (id) => {
+    dispatch(deleteOrder(id));
   };
   return (
     <>

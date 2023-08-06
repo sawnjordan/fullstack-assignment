@@ -16,29 +16,21 @@ const RESET_DELETE_BOOK = "RESET_DELETE_BOOK";
 const CLEAR_ERRORS = "CLEAR_ERRORS";
 const RESET_UPDATE_BOOK = "RESET_UPDATE_BOOK";
 
-export const deleteBook = createAsyncThunk(
-  "book/deleteBook",
-  async ({ id, bookData }) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:5000/api/v1/books/${id}`,
-        bookData,
-        postConfig
-      );
-      return response.data;
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.response
-      ) {
-        throw Error(error.response.data.response);
-      } else {
-        throw error;
-      }
+export const deleteBook = createAsyncThunk("book/deleteBook", async (id) => {
+  try {
+    const response = await axios.delete(
+      `http://localhost:5000/api/v1/books/${id}`,
+      postConfig
+    );
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.data && error.response.data.response) {
+      throw Error(error.response.data.response);
+    } else {
+      throw error;
     }
   }
-);
+});
 export const updateBook = createAsyncThunk(
   "book/updateBook",
   async ({ id, bookData }) => {
