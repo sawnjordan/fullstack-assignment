@@ -32,5 +32,11 @@ router.put(
   authServicesObj.authorizeRole("admin"),
   orderControllerObj.updateOrder
 );
+router.delete(
+  "/admin/order/:id",
+  isUserAuthenticated,
+  authServicesObj.authorizeRole("admin"),
+  orderControllerObj.deleteOrder
+);
 
 module.exports = router;

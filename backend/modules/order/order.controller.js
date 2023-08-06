@@ -98,6 +98,28 @@ class OrderController {
       next(error);
     }
   };
+
+  deleteOrder = async (req, res, next) => {
+    try {
+      const orderId = req.params.id;
+      let response = await OrderModel.findOneAndDelete({ _id: orderId });
+      // console.log(response);
+      if (!response) {
+        return res.status(404).json({
+          success: true,
+          msg: "No Order found.",
+        });
+      }
+      res.status(200).json({
+        success: true,
+        msg: `Order deleted.`,
+        response,
+      });
+    } catch (error) {
+      // console.log(error);
+      next(error);
+    }
+  };
 }
 
 const orderControllerObj = new OrderController();
